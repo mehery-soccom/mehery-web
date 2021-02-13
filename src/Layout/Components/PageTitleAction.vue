@@ -14,13 +14,11 @@
                 </div>
             </div>
             <div class="page-title-actions">
-                <button type="button" class="btn-shadow mr-3 btn btn-dark">
-                    <font-awesome-icon icon="star"/>
-                </button>
-                <button type="button" class="btn-shadow d-inline-flex align-items-center btn btn-success">
-                    <font-awesome-icon class="mr-2" icon="plus"/>
-                    Create New
-                </button>
+                <router-link v-for="action in actions" tag="button" :to="action.link"
+                    type="button" class="btn-shadow d-inline-flex align-items-center btn btn-success">
+                    <font-awesome-icon class="mr-2" :icon="action.icon"/>
+                    {{action.label}} 
+                </router-link>
             </div>
         </div>
     </div>
@@ -47,6 +45,7 @@
             icon: String,
             heading: String,
             subheading: String,
+            actions : Array
         }
     }
 </script>

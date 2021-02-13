@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
+    <page-title :heading=heading :subheading=subheading :icon=icon :actions=actions ></page-title>
     <b-card title="" class="main-card mb-4">
         <b-table :striped="striped"
                  :bordered="bordered"
@@ -19,7 +19,7 @@
 
 <script>
 
-  import PageTitle from "../../Layout/Components/PageTitle.vue";
+  import PageTitle from "../../Layout/Components/PageTitleAction.vue";
 
   export default {
     components: {
@@ -29,7 +29,10 @@
       heading: 'Agents',
       subheading: 'View all Agents.',
       icon: 'pe-7s-users icon-gradient bg-happy-itmeo',
-
+      actions : [{
+        label : "Add Agent", icon : "plus",
+        link : "/app/admins/agents/add"
+      }],
       fields: [ 'first_name', 'last_name', 'age' ],
       items: [
         { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },

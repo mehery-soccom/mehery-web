@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
+        <page-title :heading=heading :subheading=subheading :icon=icon :actions=actions></page-title>
         <div class="row">
             <div class="col-md-6">
                 <div class="main-card mb-3 card">
@@ -142,8 +142,6 @@
                     <div class="row">
                         <div class="col-md-6">
 
-               
-
                         </div>
 
                     </div>
@@ -156,18 +154,17 @@
 
 <script>
 
-    import PageTitle from "../../Layout/Components/PageTitle.vue";
+    import PageTitle from "../../Layout/Components/PageTitleAction.vue";
 
     export default {
         components: {
             PageTitle,
-
         },
         data: () => ({
             heading: 'Add Agent',
             subheading: 'Enter Details for new Agent, once created agent will recieve email to reset password',
-            icon: 'pe-7s-display1 icon-gradient bg-premium-dark',
-
+            icon: 'pe-7s-add-user icon-gradient bg-premium-dark',
+            actions : []
         }),
 
 
