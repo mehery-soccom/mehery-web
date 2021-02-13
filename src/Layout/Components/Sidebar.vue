@@ -315,3 +315,20 @@
         }
     }
 </script>
+
+<style>
+    .logo-src{
+        height: 45px;
+        width: 165px;
+    }
+    .closed-sidebar .app-sidebar .logo-src {
+        width: 40px;
+        background-position: 44px 5px;
+        height: 49px;
+    }
+    .closed-sidebar-open.closed-sidebar .app-sidebar .logo-src { 
+       width: 40px;
+        background-position: 44px 5px;
+        height: 49px;
+    }
+</style>
