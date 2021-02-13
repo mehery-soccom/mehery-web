@@ -1,7 +1,7 @@
 <template>
     <div class="app-footer">
         <div class="app-footer__inner text-center">
-            Copyright 2019 DashboardPack.com
+            Copyright &copy; 2021 Mehery SocCom - All Rights Reserved
         </div>
     </div>
 </template>
