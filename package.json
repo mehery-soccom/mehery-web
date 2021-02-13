@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.0.0-rc.18",
     "chart.js": "^2.8.0",
     "es6-promise": "^4.2.6",
+    "fsevents": "^2.3.2",
     "increase-memory-limit": "^1.0.6",
     "moment": "^2.29.1",
     "node-sass": "^4.14.0",
@@ -67,5 +68,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "resolutions": {
+    "chokidar": "^3.3.1"
+  }
 }
