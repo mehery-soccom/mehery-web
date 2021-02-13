@@ -4,6 +4,8 @@ import Router from 'vue-router'
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
+    base : "/admin/",
     scrollBehavior() {
         return window.scrollTo({ top: 0, behavior: 'smooth' });
     },
@@ -18,19 +20,35 @@ export default new Router({
         },
 
         {
+            path: '/app/admins/agents/list',
+            name: 'agents_list',
+            component: () => import('../Modules/Agents/AgentsList.vue'),
+        },
+
+        {
+            path: '/app/admins/agents/add',
+            name: 'agents_add',
+            component: () => import('../Modules/Agents/AgentsAdd.vue'),
+        },
+
+        {
+            path: '/auth/login',
+            name: 'login',
+            meta: {layout: 'userpages'},
+            component: () => import('../Modules/Auth/LoginBoxed.vue'),
+        },
+
+
+
+        // Samples Below
+
+        {
             path: '/demo/dashboard/analytics',
             name: 'analytics',
             component: () => import('../DemoPages/Dashboards/Analytics.vue'),
         },
 
         // Pages
-
-        {
-            path: '/pages/login-boxed',
-            name: 'login-boxed',
-            meta: {layout: 'userpages'},
-            component: () => import('../DemoPages/UserPages/LoginBoxed.vue'),
-        },
         {
             path: '/pages/register-boxed',
             name: 'register-boxed',

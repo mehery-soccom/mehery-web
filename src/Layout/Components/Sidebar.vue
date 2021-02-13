@@ -58,7 +58,7 @@
                 menu: menuFilter([
                     {
                         header: true,
-                        title: 'Main Navigation',
+                        title: 'Analytics',
                     },
                     {
                         title: 'Dashboards',
@@ -67,7 +67,23 @@
                             {
                                 enabled : true,
                                 href: '/',
-                                title: 'Analytics',
+                                title: 'Summary',
+                            },
+                        ]
+                    },
+                    {
+                        header: true,
+                        title: 'Admin',
+                    },
+                   {
+                        title: 'Agents',
+                        icon: 'pe-7s-users',
+                        href: '/app/admins/agents/list',
+                        child: [
+                            {
+                                enabled : true,
+                                href: '/app/admins/agents/add',
+                                title: 'Add Agent',
                             },
                         ]
                     },
@@ -76,7 +92,7 @@
                         icon: 'pe-7s-rocket',
                         child: [
                             {
-                                enabled : true,
+                                enabled : false,
                                 href: '/demo/dashboard/analytics',
                                 title: 'Analytics',
                             },
@@ -119,7 +135,7 @@
                                 ]
                             },
                             {
-                                enabled : true,
+                                enabled : false,
                                 title: 'Dropdowns',
                                 href: '/elements/dropdowns',
                             },
@@ -141,7 +157,7 @@
                             },
                             {
                                 title: 'Timeline',
-                                enabled : true,
+                                enabled : false,
                                 href: '/elements/timelines',
                             },
                             {
@@ -205,7 +221,7 @@
                     {
                         icon: 'pe-7s-graph2',
                         title: 'Chart Boxes',
-                        enabled : true,
+                        enabled : false,
                         href: '/widgets/chart-boxes-3',
                     },
                     {
@@ -217,7 +233,7 @@
                         title: 'Elements',
                         child: [
                             {
-                                enabled : true,
+                                enabled : false,
                                 title: 'Controls',
                                 href: '/forms/controls',
                             },
@@ -232,7 +248,7 @@
                         title: 'Charts',
                     },
                     {
-                        enabled : true,
+                        enabled : false,
                         icon: 'pe-7s-graph2',
                         title: 'ChartJS',
                         href: '/charts/chartjs',
