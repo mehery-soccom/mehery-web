@@ -100,7 +100,7 @@
     }
 </script>
 
-<style scoped>
+<style >
   .slot {
     background-color: #aaa;
     padding: 0.5rem;
@@ -112,5 +112,11 @@
 
   .text-black {
     color: #000;
+  }
+  .vue-daterange-picker .form-control.reportrange-text{
+    background: #6bab8d;
+    color: #FFF;
+    font-size: inherit;
+    font-weight: bold;
   }
 </style>

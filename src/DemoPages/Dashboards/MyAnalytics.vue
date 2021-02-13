@@ -12,10 +12,10 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Unique Conversations</div>
-                                            <div class="widget-subheading">------</div>
+                                            <div class="widget-subheading">Total Session</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-success">-</div>
+                                            <div class="widget-numbers text-success">10,375</div>
                                         </div>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                                             <div class="widget-subheading">Total I/O messages</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-primary">-</div>
+                                            <div class="widget-numbers text-primary">31,786</div>
                                         </div>
                                     </div>
                                 </div>
@@ -45,11 +45,11 @@
                                 <div class="widget-content-outer">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Open Conversations</div>
-                                            <div class="widget-subheading">Open Conversations</div>
+                                            <div class="widget-heading">Lead Messenger</div>
+                                            <div class="widget-subheading">WhatsApp</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-danger">--</div>
+                                            <div class="widget-numbers text-danger">72.23<small class="opacity-5">%</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -61,10 +61,10 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Peak Load</div>
-                                            <div class="widget-subheading">Peak Load</div>
+                                            <div class="widget-subheading">20 Jan 1030 to 1100</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning">--</div>
+                                            <div class="widget-numbers text-warning">5K</div>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                             <div class="widget-subheading">Start Lag</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-success">--</div>
+                                            <div class="widget-numbers text-success">5.75 <small class="opacity-5"> sec</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                             <div class="widget-subheading">Conversation Duration</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-primary">--</div>
+                                            <div class="widget-numbers text-primary">93 <small class="opacity-5"> sec</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -119,12 +119,12 @@
                                 <div class="widget-numbers">
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
-                                            <small class="opacity-5">$</small>
+                                            <small class="opacity-5"></small>
                                             <span>874</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="widget-subheading mb-0 opacity-5">sales last month</h6>
+                            <h6 class="widget-subheading mb-0 opacity-5">Open Conversations</h6>
                         </div>
                     </div>
                 </div>
@@ -138,12 +138,12 @@
                                 <div class="widget-numbers">
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
-                                            <small class="opacity-5">$</small>
-                                            <span>1283</span></div>
+                                            <small class="opacity-5"></small>
+                                            <span>530</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="widget-subheading mb-0 opacity-5">sales Income</h6>
+                            <h6 class="widget-subheading mb-0 opacity-5">Abandoned</h6>
                         </div>
                     </div>
                 </div>
@@ -157,12 +157,12 @@
                                 <div class="widget-numbers">
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
-                                            <small class="opacity-5">$</small>
-                                            <span>1286</span></div>
+                                            <small class="opacity-5"></small>
+                                            <span>7.5</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="widget-subheading mb-0 opacity-5">last month sales</h6>
+                            <h6 class="widget-subheading mb-0 opacity-5">Satisfaction Score</h6>
                         </div>
                     </div>
                 </div>
@@ -176,12 +176,12 @@
                                 <div class="widget-numbers">
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
-                                            <small class="opacity-5">$</small>
                                             <span>564</span></div>
+                                            <small class="opacity-5">%</small>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="widget-subheading mb-0 opacity-5">total revenue</h6>
+                            <h6 class="widget-subheading mb-0 opacity-5">BOT Closure</h6>
                         </div>
                     </div>
                 </div>
@@ -191,9 +191,9 @@
 
         <div class="row">
             <div class="col-md-6 col-xl-6" v-for="graph in graphs">
-                <b-card title="Line Chart" class="main-card mb-3">
+                <b-card :title="graph.title" class="main-card mb-3">
                   <lineeg
-                    :cdata="graph"
+                    :cdata="graph.data"
                   ></lineeg>
                 </b-card>
             </div>
@@ -247,14 +247,39 @@
         },
         data: () => ({
             heading: 'Analytics Dashboard',
-            subheading: 'This is an example dashboard created using build-in elements and components.',
+            subheading: 'Select date range for report',
             icon: 'pe-7s-plane icon-gradient bg-tempting-azure',
             graphs : [
-                [65, 59, 80, 81, 56, 55, 40],
-                  [65, 59, 80, 81, 56, 55, 40],
-                    [65, 59, 80, 81, 56, 55, 40],
-                      [65, 59, 80, 81, 56, 55, 40]
-            ]
+                {
+                    title : "Conversations - Cumulative",
+                    data : [65, 59, 80, 81, 56, 55, 40] 
+                },
+                {
+                    title : "Conversations - individuals",
+                    data : [65, 59, 80, 81, 56, 55, 40] 
+                },
+                {
+                    title : "Messages - Team",
+                    data : [65, 59, 80, 81, 56, 55, 40] 
+                },
+                {
+                    title : "Messages - Individuals",
+                    data : [65, 59, 80, 81, 56, 55, 40] 
+                },
+            ],
+            stats :  {
+                "contactType": {},
+                "filter": "string",
+                "peakLoad": {
+                  "timestamp": 0,
+                  "total": 0
+                },
+                "todayMsgExchanged": 0,
+                "totalInMsgExchanged": 0,
+                "totalMsgExchanged": 0,
+                "totalOutMsgExchanged": 0,
+                "uniqueConversation": 0
+            }
         }),
 
         methods: {},
