@@ -1,13 +1,16 @@
 
 import './preloader'
 import Vue from 'vue'
-import router from './router'
-import store from './store';
+
+import mainrouter from './mainrouter';
+import store from './app-admin/store';
 import axios from 'axios';
 
 import BootstrapVue from "bootstrap-vue"
 
-import App from './App'
+import AppAdmin from './AppAdmin'
+import AppAgent from './AppAgent'
+import AppDev from './AppDev'
 
 import Default from './Layout/Wrappers/baseLayout.vue';
 import Pages from './Layout/Wrappers/pagesLayout.vue';
@@ -20,19 +23,54 @@ axios.defaults.baseURL = (function() {
 	}
 	return origin
 })();
-console.log("====",axios.defaults.baseURL);
-
+console.log("ADMIN====",axios.defaults.baseURL);
 Vue.config.productionTip = false;
-
 Vue.use(BootstrapVue);
-
 Vue.component('default-layout', Default);
 Vue.component('userpages-layout', Pages);
 
-new Vue({
-  el: '#app',
-  store,
-  router,
-  template: '<App/>',
-  components: { App }
+;(function mapper(condition){ //Funtion
+	var result = (typeof condition == "function") ? condition() : condition;
+	return function (option,execute) {
+		if(option == result){
+			execute(result);
+		}
+		return mapper(result);
+	}
+})(function () { //Condition
+	return window.CONST.APP
+})("admin",function (admin) { //Admin App
+    new Vue({
+	  el: '#app',
+	  store,
+	  router : mainrouter.router(),
+	  template: '<AppAdmin/>',
+	  components: { AppAdmin }
+	});
+
+})("agent", function(agent){ //Agent App
+   new Vue({
+	  el: '#app',
+	  store,
+	  router : mainrouter.router(),
+	  template: '<AppAgent/>',
+	  components: { AppAgent }
+	});
+})("dev", function(agent){ //Agent App
+   new Vue({
+	  el: '#app',
+	  store,
+	  router : mainrouter.router(),
+	  template: '<AppDev/>',
+	  components: { AppDev }
+	});
 });
+
+
+
+
+
+
+
+
+

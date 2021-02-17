@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  import router from "./app-dev/router";
   const default_layout = "default";
 
   export default {
@@ -21,5 +22,5 @@
 </script>
 
 <style lang="scss">
-  @import "assets/base.scss";
+  @import "./assets/base.scss";
 </style>
