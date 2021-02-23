@@ -1,1 +1,135 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=icon href=favicon.ico><title>Admin App</title><base href=/admin/ ><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><link href=css/chunk-05d0a737.css rel=prefetch><link href=css/chunk-18a21821.css rel=prefetch><link href=css/chunk-77b7fe9c.css rel=prefetch><link href=js/chunk-03cb127c.js rel=prefetch><link href=js/chunk-03e133b6.js rel=prefetch><link href=js/chunk-051bdaa3.js rel=prefetch><link href=js/chunk-05d0a737.js rel=prefetch><link href=js/chunk-0b438c1d.js rel=prefetch><link href=js/chunk-184b9536.js rel=prefetch><link href=js/chunk-18a21821.js rel=prefetch><link href=js/chunk-1b76d2fa.js rel=prefetch><link href=js/chunk-26b0bb08.js rel=prefetch><link href=js/chunk-26c7766d.js rel=prefetch><link href=js/chunk-28ec8ce6.js rel=prefetch><link href=js/chunk-2d0a4d60.js rel=prefetch><link href=js/chunk-2d213f26.js rel=prefetch><link href=js/chunk-3349ebea.js rel=prefetch><link href=js/chunk-3b7267b3.js rel=prefetch><link href=js/chunk-432a7420.js rel=prefetch><link href=js/chunk-4c2a4c50.js rel=prefetch><link href=js/chunk-5b09fbac.js rel=prefetch><link href=js/chunk-5dc4b0ae.js rel=prefetch><link href=js/chunk-6a52c407.js rel=prefetch><link href=js/chunk-77b7fe9c.js rel=prefetch><link href=js/chunk-7895e7a7.js rel=prefetch><link href=js/chunk-7f609936.js rel=prefetch><link href=js/chunk-983b3754.js rel=prefetch><link href=js/chunk-b599e804.js rel=prefetch><link href=js/chunk-fc1f75c4.js rel=prefetch><link href=js/chunk-ff00d9f4.js rel=prefetch><link href=js/chunk-ff28cc2e.js rel=prefetch><link href=js/chunk-ffa65332.js rel=prefetch><link href=app.js rel=preload as=script><link href=css/app.css rel=preload as=style><link href=js/chunk-vendors.js rel=preload as=script><link href=css/app.css rel=stylesheet></head><body><noscript><strong>We're sorry but ArchitectUI doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.js></script><script src=app.js></script></body></html>
+<!DOCTYPE html><html lang=en class="loadable loading"><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=icon href=favicon.ico><title>Admin App</title><base href=/admin/ ><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"><style type=text/css>html.loadable {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+}
+html.loadable, body.loadable,.main-content-wrapper{
+    min-height: 100%;
+}
+html.loadable.loading {
+     background: #347fc3;
+}
+html.loadable .main-content-wrapper {
+    -webkit-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+}
+html.loadable.loading .main-content-wrapper {
+    /* Make the contents of the body opaque during loading */
+    opacity: 0;
+    /* Ensures that the transition only runs in one direction */
+    -webkit-transition: opacity 0;
+    transition: opacity 0;
+}
+html.loadable .fullloader.bar {
+    opacity: 0;
+    -webkit-transition: opacity 0;
+    transition: opacity 0;
+    
+    -webkit-transition: background-color 0;
+    transition: background-color 0;
+    
+    -webkit-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+    
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    position: absolute;
+}
+html.loadable.loading .fullloader.bar {
+    opacity: 1;
+}
+html.loadable .container {
+  height: 100vh;
+  width: 100vw;
+  font-family: Helvetica;
+}
+
+html.loadable .loader {
+  height: 20px;
+  width: 250px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+html.loadable .loader--dot {
+  animation-name: loader;
+  animation-timing-function: ease-in-out;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  background-color: black;
+  position: absolute;
+   border: 1px solid #ffffff;
+   opacity: 0.2;
+   background-color: #FFF;
+  
+}
+html.loadable .loader--dot:first-child {
+  animation-delay: 0.5s;
+}
+html.loadable .loader--dot:nth-child(2) {
+  animation-delay: 0.4s;
+}
+html.loadable .loader--dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+html.loadable .loader--dot:nth-child(4) {
+  animation-delay: 0.2s;
+}
+html.loadable .loader--dot:nth-child(5) {
+  animation-delay: 0.1s;
+}
+html.loadable .loader--dot:nth-child(6) {
+  animation-delay: 0s;
+}
+html.loadable .loader--text {
+  position: absolute;
+  top: 200%;
+  left: 0;
+  right: 0;
+  width: 4rem;
+  margin: auto;
+}
+html.loadable .loader--text:after {
+  content: "Loading";
+  font-weight: bold;
+  animation-name: loading-text;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  color : #FFF;
+}
+
+@keyframes loader {
+  15% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(230px);
+  }
+  65% {
+    transform: translateX(230px);
+  }
+  95% {
+    transform: translateX(0);
+  }
+}
+@keyframes loading-text {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}</style><link href=css/chunk-05d0a737.css rel=prefetch><link href=css/chunk-149f9028.css rel=prefetch><link href=css/chunk-1b01a2ac.css rel=prefetch><link href=css/chunk-ac240c78.css rel=prefetch><link href=js/chunk-03cb127c.js rel=prefetch><link href=js/chunk-03e133b6.js rel=prefetch><link href=js/chunk-051bdaa3.js rel=prefetch><link href=js/chunk-05d0a737.js rel=prefetch><link href=js/chunk-0b438c1d.js rel=prefetch><link href=js/chunk-149f9028.js rel=prefetch><link href=js/chunk-184b9536.js rel=prefetch><link href=js/chunk-1b01a2ac.js rel=prefetch><link href=js/chunk-26b0bb08.js rel=prefetch><link href=js/chunk-26c7766d.js rel=prefetch><link href=js/chunk-28ec8ce6.js rel=prefetch><link href=js/chunk-2d0a4d60.js rel=prefetch><link href=js/chunk-2d0baaad.js rel=prefetch><link href=js/chunk-2d213f26.js rel=prefetch><link href=js/chunk-3349ebea.js rel=prefetch><link href=js/chunk-34294a1e.js rel=prefetch><link href=js/chunk-3b7267b3.js rel=prefetch><link href=js/chunk-432a7420.js rel=prefetch><link href=js/chunk-4c2a4c50.js rel=prefetch><link href=js/chunk-5b09fbac.js rel=prefetch><link href=js/chunk-6a52c407.js rel=prefetch><link href=js/chunk-7895e7a7.js rel=prefetch><link href=js/chunk-7f609936.js rel=prefetch><link href=js/chunk-983b3754.js rel=prefetch><link href=js/chunk-ac240c78.js rel=prefetch><link href=js/chunk-ad4a4b00.js rel=prefetch><link href=js/chunk-b599e804.js rel=prefetch><link href=js/chunk-fc1f75c4.js rel=prefetch><link href=js/chunk-ff00d9f4.js rel=prefetch><link href=js/chunk-ff28cc2e.js rel=prefetch><link href=js/chunk-ffa65332.js rel=prefetch><link href=app.js rel=preload as=script><link href=css/app.css rel=preload as=style><link href=js/chunk-vendors.js rel=preload as=script><link href=css/app.css rel=stylesheet></head><body><noscript><strong>We're sorry but ArchitectUI doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div class="fullloader bar container"><div class=loader><div class=loader--dot></div><div class=loader--dot></div><div class=loader--dot></div><div class=loader--dot></div><div class=loader--dot></div><div class=loader--dot></div><div class=loader--text></div></div></div><div id=app></div><script src=js/chunk-vendors.js></script><script src=app.js></script></body></html>
