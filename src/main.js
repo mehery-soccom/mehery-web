@@ -2,8 +2,8 @@
 import './preloader'
 import Vue from 'vue'
 
-import mainrouter from './mainrouter';
-import store from './app-admin/store';
+import mainrouter from './router';
+import store from './store';
 import axios from 'axios';
 
 import BootstrapVue from "bootstrap-vue"
@@ -19,15 +19,13 @@ axios.defaults.withCredentials = true
 axios.defaults.baseURL = (function() {
 	var origin  = window.location.origin
 	if(window.CONST && window.CONST.APP_CONTEXT){
-		return origin + "/" +window.CONST.APP_CONTEXT
+		return origin +window.CONST.APP_CONTEXT
 	}
 	return origin
 })();
 console.log("ADMIN====",axios.defaults.baseURL);
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
-Vue.component('default-layout', Default);
-Vue.component('userpages-layout', Pages);
 
 ;(function mapper(condition){ //Funtion
 	var result = (typeof condition == "function") ? condition() : condition;
@@ -40,6 +38,9 @@ Vue.component('userpages-layout', Pages);
 })(function () { //Condition
 	return window.CONST.APP
 })("admin",function (admin) { //Admin App
+	Vue.component('default-layout', Default);
+	Vue.component('userpages-layout', Pages);
+
     new Vue({
 	  el: '#app',
 	  store,

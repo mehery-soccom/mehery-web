@@ -71,15 +71,15 @@
         computed : {
           isLoggedIn : function(){ return this.$store.getters.isAuthenticated}
         },
-        data: () => ({
-
-        }),
-
-       methods: {
-          async logout (){
-            await this.$store.dispatch('LogOut')
-            this.$router.push('auth/login')
-          }
+        data () {
+            return {
+            };
+        },
+        methods: {
+            async logout (){
+                await this.$store.dispatch('LogOut')
+                this.$router.push('auth/login')
+            }
         },
 
         

@@ -1,4 +1,4 @@
-import AppRouter from './../mainrouter';
+import AppRouter from './../router';
 
 export default AppRouter.route({
     app : "admin",
