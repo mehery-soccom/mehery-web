@@ -286,15 +286,15 @@
     font-size: 20px;
   }
   .action_menu{
-    z-index: 1;
+z-index: 1;
     position: absolute;
     padding: 15px 0;
-    background-color: rgba(0,0,0,0.5);
-    color: white;
-    border-radius: 15px;
-    top: 30px;
-    right: 15px;
-    display: none;
+    background-color: rgb(255 255 255);
+    color: #060606;
+    border-radius: 5px;
+    top: 15px;
+    right: 10px;
+    border: solid 1px #d8d8d8;
   }
   .action_menu ul{
     list-style: none;
@@ -514,6 +514,11 @@ ul.contacts li.data_unassigned {
     background-position: center;
     filter: grayscale(100%);
     opacity : 0.2;
+}
+.msg_card_body-bubbles {
+  min-height: calc(100% - 65px);
+  min-height: -webkit-calc(100% - 65px);
+  min-height: -moz-calc(100% - 65px);
 }
 .msg_card_body-panel hr{
   border-top: 1px solid #e0dddd;

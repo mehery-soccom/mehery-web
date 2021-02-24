@@ -12,25 +12,30 @@
                             v-if="activeChat"
                             @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
                             <span class="user_name">{{activeChat.name}}</span>
-                            <p class="user_text">{{activeChat.lastInComingStamp*1000 | formatDate}} </p>
+                            <p class="user_text">{{activeChat.ilastmsg.timestamp | formatDate}} </p>
                         </div>
                         <div class="video_cam">
                             <span><i class="fas fa-video" hidden></i></span>
                             <span><i class="fas fa-phone" hidden></i></span>
                         </div>
-                        <div class="chat_actions">
-                            <span  @click="closSession" title="Close Chat"><i class="fa fa-check-circle"></i></span>
+                        <div class="chat_actions" hidden>
+                            <button  @click="closSession" title="Close Chat"
+                            class="btn"><i class="fa fa-check-circle"></i></button>                            
                         </div>
                     </div>
-                    <span id="action_menu_btn" hidden><i class="fas fa-ellipsis-v"></i></span>
-                    <div class="action_menu">
-                        <ul>
-                            <li><i class="fas fa-user-circle"></i> View profile</li>
-                            <li><i class="fas fa-users"></i> Add to close friends</li>
-                            <li><i class="fas fa-plus"></i> Add to group</li>
-                            <li><i class="fas fa-ban"></i> Block</li>
-                        </ul>
+                    <div    @mouseover="showChatOptions = true"
+                            @mouseleave="showChatOptions = false">
+                        <span id="action_menu_btn"
+                        ><i class="fas fa-ellipsis-v"></i></span>
+                        <div class="action_menu" v-show="showChatOptions">
+                            <ul style="padding-top: 10px">
+                                <li @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
+                                    <i class="fas fa-user-circle"></i> User Profile</li>
+                                <li><i class="fa fa-check-circle"></i> Resolve Ticket</li>
+                            </ul>
+                        </div>  
                     </div>
+
                 </div>
                 <div class="card-body msg_card_body" v-show="!showMediaOptions">
                     <div class="msg_card_body-bubbles">
@@ -49,7 +54,6 @@
         </div>
         <span class="msg_time"><span class="msg_user">{{m.name ||'---'}}</span>&nbsp;&nbsp;{{m.timestamp|formatDate}}</span>
     </div>
-
 
     <div v-else="m.type" class="d-flex justify-content-end mb-4 chat-bubble" data-local-id="m.localId" :data-message-id="m.messageId">
        <i v-if="!m.messageId" class="sending fa fa-spinner fa-spin" >&nbsp;</i>
@@ -75,6 +79,9 @@
                     <div class="msg_card_body-panel">
                         <hr/>
                         <div class="msg_card_body-panel-tags">
+                            <span v-if="quickReplies" v-for="quickReply in quickReplies" 
+                                @click="sendQuickReply"
+                                class="msg_cotainer_smart">  {{quickReply.id.subject}}</span>
                         </div>
                     </div>
                 </div>
@@ -168,9 +175,11 @@
             },
         },
         data: () => ({
-            message_text : "",
+            message_text : "",quickReplies : null,
             selectedMedia : null,
             showMediaOptions : false,
+            showChatOptions : false,
+            lastMessageId : null,ilastMessageId :  null,
             MyDict,MyFlags,MyConst
         }),
         created () {
@@ -182,13 +191,16 @@
         },
         updated (){
             this.scrollToBottom();
+            this.loadQuickReplies();
         },
         mounted (){
             this.scrollToBottom();
+            this.loadQuickReplies();
         },
         watch: {
             '$route.params.id': function (id) {
                this.scrollToBottom();
+               this.loadQuickReplies();
             }
         },
         methods: {
@@ -228,10 +240,24 @@
             }, newline : function (argument) {
                 this.value = `${this.message_text}\n`;
             },
+            sendQuickReply : function (argument) {
+                this.sendText(event.target.innerText,this.showMediaOptions ?   this.selectedMedia : null);
+            },
             closSession :  function () {
                 this.sendText("/exit_chat");
             },
             scrollToBottom : function (argument) {
+                var activeChat = this.activeChat;
+                if(!activeChat){
+                    return;
+                }
+                var msgs = activeChat.messages;
+                var lastMessageId = msgs[msgs.length-1].messageId;
+                if(this.lastMessageId == lastMessageId){
+                    return;
+                }
+                this.lastMessageId = lastMessageId;
+
                 //this.$nextTick(() => {
                     var mcb =document.querySelector('.msg_card_body');
                     if(mcb){
@@ -242,6 +268,19 @@
             },
             async loadMediaOptions(){
                 await this.$store.dispatch('LoadMediaOptions')
+            },
+            async loadQuickReplies(){
+                var activeChat = this.activeChat;
+                if(!activeChat){
+                    return;
+                }
+                var ilastmsg = activeChat.ilastmsg;
+                if(this.ilastMessageId == ilastmsg.messageId){
+                    return;
+                }
+                this.ilastMessageId = ilastmsg.messageId;
+                var quickReplies = await this.$store.dispatch('LoadQuickReplies',ilastmsg.tags);
+                this.quickReplies = quickReplies;
             },
         },
 

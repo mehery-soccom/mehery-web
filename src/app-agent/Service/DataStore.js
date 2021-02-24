@@ -20,7 +20,8 @@ const state = {
   chats : null,
   chatsCounter : 1,
   meta : null,
-  mediaOptions : null
+  mediaOptions : null,
+  quickReplies : []
 };
 
 const getters = {
@@ -105,7 +106,7 @@ const actions = {
   async ReadChat({ commit },m) {
     m.messageIdExt = m.messageIdExt || guid();
     for(var c in state.chats){
-      if(m.sessionId == state.chats[c].sessionId){
+      if( (m.sessionId == state.chats[c].sessionId ) || (m.contactId == state.chats[c].contactId) ){
         var index  = -1
         for(var j in state.chats[c].messages){
           var msg = state.chats[c].messages[j];
@@ -144,6 +145,35 @@ const actions = {
     commit("setMediaOptions", response.data);
   },
 
+  async LoadQuickReplies({ commit },tags) {
+    var categories = (tags || {categories : []}).categories;
+    var _categories = [];
+    var resps = [];
+    for(var i in categories){
+      var quickReplyMatched = state.quickReplies.filter(function (quickReply) {
+        return quickReply.id.category == categories[i]
+      })[0];
+      if(quickReplyMatched){
+          resps.push(quickReplyMatched);
+      } else {
+        _categories.push(categories[i]);
+      }
+    }
+
+    if(_categories.length){
+      let response = await axios.get("/category/map/smart_reply.json?value="
+          + _categories.join(",")
+      );
+      var data = response.data;
+      for(var i in data){
+        state.quickReplies.push(data[i]);
+        resps.push(data[i]);
+      }
+    }
+    return resps;
+    //commit("setMediaOptions", response.data);
+  },
+
 };
 
 const mutations = {
@@ -151,6 +181,12 @@ const mutations = {
   setChats(state, chats) {
     for(var c in chats){
       chats[c].lastmsg = chats[c].messages[chats[c].messages.length-1] || {};
+      for (var i = chats[c].messages.length - 1; i >= 0; i--) {
+        if(!chats[c].messages[i].type){
+          chats[c].ilastmsg = chats[c].messages[i];
+          break;
+        }
+      }
     }
     state.chats = chats;
   },

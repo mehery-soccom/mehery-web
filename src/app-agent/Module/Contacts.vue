@@ -7,14 +7,6 @@
                         @click="MyFlags.showSidebar = !MyFlags.showSidebar">
                         <i class="fa fa-bars"></i>
                     </span>
-                    <div class="action_menu menu_btn_menu">
-                        <ul>
-                            <li><i class="fas fa-user-circle"></i> View profile</li>
-                            <li><i class="fas fa-users"></i> Add to close friends</li>
-                            <li><i class="fas fa-plus"></i> Add to group</li>
-                            <li><i class="fas fa-ban"></i> Block</li>
-                        </ul>
-                    </div>
                 </div>
                 <input type="text" 
                     v-model="search"
@@ -124,12 +116,15 @@
         },
         methods: {
             async loadChats(){
-                await this.$store.dispatch('GetChats')
+                await this.$store.dispatch('GetChats');
             },
             async toggleOnline(){
-                await this.$store.dispatch('OnlineStatus')
+                await this.$store.dispatch('OnlineStatus');
             },
             inputSearch : ()=> {
+
+            },
+            loadQuickReply : () => {
 
             }
         },
