@@ -76,7 +76,9 @@ const actions = {
      let UserForm = new FormData();
      UserForm.append('agent_id', agent.agent_id);
      UserForm.append('status', agent.isactive);
-     let response = await axios.delete("/api/admins/agent",UserForm);
+     let response = await axios.delete("/api/admins/agent?agent_id="+agent.agent_id +"&status=" + agent.isactive,{
+      data : {agent_id : agent.agent_id, status : agent.isactive }
+     });
      commit("setAgents", response.data);
   }
 
