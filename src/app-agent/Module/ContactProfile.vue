@@ -45,7 +45,7 @@
                         return chat;
                     }
                 }
-                return null;
+                return {};
             },
         },
         data: () => ({

@@ -12,9 +12,6 @@ import AppAdmin from './AppAdmin'
 import AppAgent from './AppAgent'
 import AppDev from './AppDev'
 
-import Default from './Layout/Wrappers/baseLayout.vue';
-import Pages from './Layout/Wrappers/pagesLayout.vue';
-
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = (function() {
 	var origin  = window.location.origin
@@ -38,9 +35,6 @@ Vue.use(BootstrapVue);
 })(function () { //Condition
 	return window.CONST.APP
 })("admin",function (admin) { //Admin App
-	Vue.component('default-layout', Default);
-	Vue.component('userpages-layout', Pages);
-
     new Vue({
 	  el: '#app',
 	  store,

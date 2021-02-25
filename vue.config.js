@@ -10,9 +10,16 @@ module.exports = {
   		}
   	},
 	 devServer: {
-        proxy: 'http://localhost:8080/',
-        public: 'http://localhost:8080/',
+        proxy: 'http://127.0.0.1:8080/',
+        public: 'http://127.0.0.1:8080/',
+        host : '0.0.0.0',
         disableHostCheck: true,
+        allowedHosts: [
+          'app.mehery.com','api.mehery.com',
+          'subdomain.host.com',
+          'subdomain2.host.com',
+          'host2.com',
+        ],
         //historyApiFallback: false,
         // historyApiFallback: {
         //   rewrites: [

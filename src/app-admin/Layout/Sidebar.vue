@@ -85,6 +85,12 @@
                                 href: '/app/admins/agents/add',
                                 title: 'Add Agent',
                             },
+                            {
+                                enabled : true,
+                                href: '/app/admins/agents/teams',
+                                title: 'Teams',
+                            },
+
                         ]
                     },
                     {

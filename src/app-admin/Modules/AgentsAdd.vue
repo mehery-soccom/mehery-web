@@ -11,7 +11,7 @@
                                     <label for="examplePassword" class="">Name</label>
                                     <input name="agent_name" id="examplePassword"
                                      placeholder="John Doe" type="text"
-                                      class="form-control">
+                                      class="form-control" v-model="newAgent.agent_name">
                               </div>
 
                             <div class="position-relative form-group">
@@ -20,21 +20,21 @@
                                         id="exampleEmail"
                                         placeholder="abc@xyz.com"
                                         type="email"
-                                        class="form-control">
+                                        class="form-control" v-model="newAgent.agent_email">
                             </div>
                             <div class="position-relative form-group">
                                 <label for="exampleEmail" class="">Agent Code</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"><span class="input-group-text">@</span></div>
-                                    <input placeholder="john,sam2" type="text" class="form-control">
+                                    <input placeholder="john,sam2" type="text" class="form-control" v-model="newAgent.agent_code">
                                 </div>
                             </div>
  
 
                             <div class="position-relative form-group"><label for="examplePassword"
                                                                              class="">Password</label><input
-                                name="password" id="examplePassword" placeholder="password placeholder" type="password"
-                                class="form-control"></div>
+                                name="password" id="examplePassword" placeholder="password" type="password"
+                                class="form-control" v-model="newAgent.agent_password"></div>
                            
                         </form>
                     </div>
@@ -48,20 +48,20 @@
                             <div class="row">
                                 <div class="col-md-6">
                                       
-                                    <div class="position-relative form-group"><label for="exampleSelect" class="">Department</label>
-                                      <select name="select" id="exampleSelect" class="form-control">
-                                          <option>Sales</option>
-                                          <option>Marketing</option>
-                                          <option>Finance</option>
-                                          <option>Online</option>
-                                          <option>Admin</option>
+                                    <div class="position-relative form-group"><label for="exampleSelect" class="">Team</label>
+                                      <select name="select" id="exampleSelect" class="form-control"
+                                        v-model="newAgent.dept_id">
+                                          <option v-for="team in teams"
+                                          v-if="team.isactive=='Y'" :value=team.dept_id>
+                                          {{team.dept_name}}</option>
                                         </select>
                                     </div>
 
                                     <div class="position-relative form-group">
                                         <label for="exampleCustomMutlipleSelect" class="">Channels</label>
                                         <select multiple="" type="select" id="exampleCustomMutlipleSelect"
-                                                 name="customSelect" class="custom-select">
+                                                 name="customSelect" class="custom-select"
+                                                 v-model="newAgent.agent_channels_list">
                                                 <option>WhatsApp</option>
                                                 <option>Facebook</option>
                                                 <option>Twitter</option>
@@ -105,10 +105,10 @@
                         </div>
                     </div>
 
-                      <div class="main-card mb-3 card">
+                      <div class="main-card mb-3 card" hidden>
                           <div class="card-body row">
                             <h5 class="card-title"></h5>
-                              <div class="position-relative form-group col-md-6">
+                              <div class="position-relative form-group col-md-6" >
                                   <div>
                                       <div class="custom-checkbox custom-control"><input type="checkbox"
                                                                                          id="exampleCustomCheckbox"
@@ -123,38 +123,39 @@
                                          
                                   </div>
                               </div>
-                               <div class="col-md-6">
-                                  <button class="mt-1 btn btn-primary float-right">Submit</button>
-                                </div>
+                  
                           </div>
   
                       </div>
 
-
             </div>
 
-
-
-
-
         </div>
-                <form class="">
-                    <div class="row">
-                        <div class="col-md-6">
 
-                        </div>
-
-                    </div>
-                </form>
-        <div>
-          
+        <div class="main-card mb-4">
+            <div class="row">
+                  <div class="col-md-6">
+                          <button class="mt-1 btn btn-primary float-right"
+                          @click="createAgent" >Submit</button>
+                  </div>
+            </div>          
         </div>
     </div>
 </template>
 
 <script>
 
-    import PageTitle from "../../Layout/Components/PageTitleAction.vue";
+    import PageTitle from "../Layout/PageTitleAction.vue";
+
+
+    function newAgent() {
+      return {
+              "agent_code": "",
+              "agent_email": "",
+              "agent_id" : 0,
+              "agent_channels_list": [],"agent_channels" : ""
+            };
+    }
 
     export default {
         components: {
@@ -164,9 +165,25 @@
             heading: 'Add Agent',
             subheading: 'Enter Details for new Agent, once created agent will recieve email to reset password',
             icon: 'pe-7s-add-user icon-gradient bg-premium-dark',
-            actions : []
+            actions : [],
+            newAgent : newAgent()
         }),
-
-
+        computed : {
+            teams : function (argument) {
+              return this.$store.getters.StateTeams
+            } 
+        },
+        created : function (argument) {
+          this.loadAgentTeams();
+        },
+        methods : {
+          async loadAgentTeams (){
+            await this.$store.dispatch('GetTeams');
+          },
+          async createAgent () {
+            await this.$store.dispatch('CreateAgent', this.newAgent);
+            this.newAgent = newAgent();
+          },
+        }
     }
 </script>

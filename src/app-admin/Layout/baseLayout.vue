@@ -28,9 +28,9 @@
 </template>
 
 <script>
-    import Header from "../Components/Header";
-    import Sidebar from "../Components/Sidebar";
-    import Footer from "../Components/Footer";
+    import Header from "./Header";
+    import Sidebar from "./Sidebar";
+    import Footer from "./Footer";
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
     import {library} from '@fortawesome/fontawesome-svg-core'

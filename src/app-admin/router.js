@@ -14,20 +14,26 @@ export default AppRouter.route({
         {
             path: '/app/admins/agents/list',
             name: 'agents_list',
-            component: () => import('../Modules/Agents/AgentsList.vue'),
+            component: () => import('./Modules/AgentsList.vue'),
         },
 
         {
             path: '/app/admins/agents/add',
             name: 'agents_add',
-            component: () => import('../Modules/Agents/AgentsAdd.vue'),
+            component: () => import('./Modules/AgentsAdd.vue'),
+        },
+
+        {
+            path: '/app/admins/agents/teams',
+            name: 'dept',
+            component: () => import('./Modules/AgentsTeams.vue'),
         },
 
         {
             path: '/auth/login',
             name: 'login',
             meta: {layout: 'userpages'},
-            component: () => import('../Modules/Auth/LoginBoxed.vue'),
+            component: () => import('./Modules/LoginBoxed.vue'),
         },
 
     ]
