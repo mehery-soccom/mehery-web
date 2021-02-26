@@ -91,7 +91,8 @@
             icon: 'pe-7s-users icon-gradient bg-premium-dark',
             actions : [],
             fields: [ { key : 'dept_name', label : "Name" }, { key : 'dept_code', label : "Code" }, 
-              { key : 'dept_email', label : "Email" },{ key: 'actions', label: 'Actions' }],
+              { key : 'dept_email', label : "Email" },
+              { key: 'actions', label: 'Actions' }],
             newTeam : newTeam()
         }),
         computed : {

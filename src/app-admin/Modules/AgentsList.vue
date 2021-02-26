@@ -42,6 +42,7 @@
       }],
       fields: [ { key : 'dept.dept_code', label : "Dept" },{ key : 'agent_name', label : "Name" },
        { key : 'agent_code', label : "Code" }, { key : 'agent_email', label : "Email" },
+       { key : 'agent_channels', label : "Channels" },
        { key : 'actions', label : "Action" }]
     }),
     computed : {

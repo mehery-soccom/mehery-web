@@ -13,6 +13,14 @@ function guid() {
       + s4() + s4();
 }
 
+  function validateResponse(response){
+    if(response.request.responseURL.endsWith("/auth/login")){
+      //https://app.mehery.com/admin/auth/login
+      console.log("===>",response.request.responseURL)
+      window.location.href = response.request.responseURL;
+    }
+  }
+
 const state = {
   user: null,
   posts: null,
@@ -80,7 +88,19 @@ const actions = {
       data : {agent_id : agent.agent_id, status : agent.isactive }
      });
      commit("setAgents", response.data);
-  }
+  },
+
+  async LoadAnalytics({ commit },options) {
+    let response = await axios.post("/admin/dashboard-analytics",options);
+    validateResponse(response);
+    return response.data;
+  },
+
+  async GetSessions({ commit },options) {
+    let response = await axios.get( "/api/message/session",{ params : options });
+    validateResponse(response);
+    return response.data;
+  },
 
 };
 

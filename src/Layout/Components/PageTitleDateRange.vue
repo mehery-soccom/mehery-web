@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="page-title-actions">
-               <date-range-picker v-model="dateRange"
+               <date-range-picker v-model="mydaterange"
                     :opens="'left'"
                     :time-picker="false"
                     :ranges="ranges"
@@ -62,40 +62,59 @@
             DateRangePicker,
         },
         data () {
-          return {
-            dateRange: {startDate : hour0(moment()).toDate(), endDate : hour24(moment()).toDate()},
-            ranges : {
-                'Today': [ hour0(moment()).toDate(), hour24(moment()).toDate()],
+            var startDate = this.daterange.startDate || hour0(moment()).toDate(),
+            endDate = this.daterange.endDate || hour24(moment()).toDate()
+            
+            return {
+                mydaterange: {startDate : startDate, endDate : endDate},
+                ranges : {
+                    'Today': [ hour0(moment()).toDate(), hour24(moment()).toDate()],
 
-                'Yesterday': [hour0(moment().subtract(1,"day")).toDate(),
-                                 hour24(moment().subtract(1,"day")).toDate()],
+                    'Yesterday': [hour0(moment().subtract(1,"day")).toDate(),
+                                     hour24(moment().subtract(1,"day")).toDate()],
 
-                'This month': [hour0(moment().date(1)).toDate(), 
-                                    hour24(moment()).toDate()],
-                'Last month': [hour0(moment().subtract(1,"month").date(1)).toDate(), 
-                                   hour24(moment().date(0)).toDate()],
-                'This year': [hour0(moment().month(0).date(1)).toDate(), 
-                                    hour24(moment()).toDate()],
-                'Last year': [hour0(moment().subtract(1,"year").month(0).date(1)).toDate(), 
+                    'This month': [hour0(moment().date(1)).toDate(), 
+                                        hour24(moment()).toDate()],
+                    'Last month': [hour0(moment().subtract(1,"month").date(1)).toDate(), 
+                                       hour24(moment().date(0)).toDate()],
+                    'This year': [hour0(moment().month(0).date(1)).toDate(), 
+                                        hour24(moment()).toDate()],
+                    'Last year': [hour0(moment().subtract(1,"year").month(0).date(1)).toDate(), 
                                     hour24(moment().month(0).date(0)).toDate()],
-            },
-            onSelect : function (r) {
-                console.log("select",r);
-            },
-            onUpdate : function (r) {
-                console.log("update",r);
+                }
             }
-          }
         },
         filters: {
           date(val) {
             return val ? val.toLocaleString() : ''
           }
         },
+        created : function (argument) {
+            if(!this.daterange.startDate){
+                this.daterange.startDate = hour0(moment()).toDate()
+            }
+            if(!this.daterange.endDate){
+                this.daterange.endDate = hour24(moment()).toDate()
+            }
+        },
+        methods : {
+            onSelect : function (r) {
+                console.log("select",r,);
+            },
+            onUpdate : function (r) {
+                console.log("c_update",r);
+                this.daterange.startDate = r.startDate;
+                this.daterange.endDate = r.endDate;
+                this.$emit('dateRangeOnUpdate', r);
+            }
+        },
         props: {
             icon: String,
             heading: String,
             subheading: String,
+            daterange : {
+                type: Object
+            }
         }
     }
 </script>

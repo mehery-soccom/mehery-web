@@ -8,7 +8,12 @@ export default AppRouter.route({
         {
             path: '/',
             name: 'myanalytics',
-            component: () => import('../DemoPages/Dashboards/MyAnalytics.vue'),
+            component: () => import('./Modules/MyAnalytics.vue'),
+        },
+        {
+            path: '/app/reports/sessions',
+            name: 'dept',
+            component: () => import('./Modules/AgentSessions.vue'),
         },
 
         {

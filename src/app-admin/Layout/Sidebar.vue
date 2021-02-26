@@ -58,18 +58,23 @@
                 menu: menuFilter([
                     {
                         header: true,
-                        title: 'Analytics',
+                        title: 'Dashboards',
                     },
                     {
-                        title: 'Dashboards',
+                        title: 'Summary',
                         icon: 'pe-7s-rocket',
-                        child: [
-                            {
-                                enabled : true,
-                                href: '/',
-                                title: 'Summary',
-                            },
-                        ]
+                        href: '/',
+                        enabled : true
+                    },
+                    {
+                        header: true,
+                        title: 'Reports',
+                    },
+                    {
+                        title: 'Sessions',
+                        icon: 'pe-7s-rocket',
+                        href: '/app/reports/sessions',
+                        enabled : true
                     },
                     {
                         header: true,

@@ -1,6 +1,7 @@
 <template>
     <div>
-        <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
+        <page-title :heading=heading :subheading=subheading :icon=icon
+        :daterange=input.daterange v-on:dateRangeOnUpdate="dateRangeOnUpdate" ></page-title>
 
         <div class="card mb-3">
             <div class="no-gutters row">
@@ -210,9 +211,9 @@
     import PageTitle from "../../Layout/Components/PageTitleDateRange.vue";
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
-    import chart1 from './Analytics/chart1';
-    import chart2 from './Analytics/chart2';
-    import chart3 from './Analytics/chart3';
+    //import chart1 from './Analytics/chart1';
+    //import chart2 from './Analytics/chart2';
+    //import chart3 from './Analytics/chart3';
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {
@@ -224,7 +225,7 @@
         faTh,
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-    import lineeg from '../Charts/Chartjs/MyLine'
+    import lineeg from '../../Modules/Charts/Chartjs/MyLine'
 
     library.add(
         faTrashAlt,
@@ -240,9 +241,7 @@
             PageTitle,
             VuePerfectScrollbar,
             'font-awesome-icon': FontAwesomeIcon,
-            chart1,
-            chart2,
-            chart3,
+           // chart1,chart2,chart3,
             lineeg,
         },
         data: () => ({
@@ -279,10 +278,35 @@
                 "totalMsgExchanged": 0,
                 "totalOutMsgExchanged": 0,
                 "uniqueConversation": 0
+            },
+            input : {
+                daterange : {
+                    startDate : null,
+                    endDate : null,
+                }
+            },
+            summary : {
+
             }
         }),
 
-        methods: {},
+        methods: {
+          async loadAnalytics (){
+            var resp = await this.$store.dispatch('LoadAnalytics',{
+              "agent": "TEAM",
+              "contactType": "MESSAGE_TWITTER",
+              //"dateRange1": this.input.daterange.startDate,
+              //"dateReange2": this.input.daterange.endDate
+            });
+            this.summary = resp[0];
+          },
+          dateRangeOnUpdate : function (r) {
+               console.log("dateRangeOnUpdate",r);
+               this.input.daterange.startDate = r.startDate.getTime();
+               this.input.daterange.endDate = r.endDate.getTime();
+               this.loadAnalytics();
+          }
+        },
 
     }
 
