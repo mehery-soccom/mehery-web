@@ -20,6 +20,8 @@
   import { MyFlags,MyDict,MyConst } from './app-agent/global';
   import tunnel from './services/tunnel';
 
+  import numeral from 'numeral';
+
   const default_layout = "default";
 
   Vue.component('default-layout', () => import('./app-agent/Layout/DefaultLayout.vue'));
@@ -52,6 +54,19 @@
   Vue.filter('formatDate', formatTime);
   Vue.filter('newlines', function (html_str) {
       return html_str.trim() ;//.replace(/(?:\r\n|\r|\n)/g, '<br/>').trim();
+  });
+  Vue.filter('number', function (value) {
+      return numeral(value).format("0,0a").toUpperCase();//.replace(/(?:\r\n|\r|\n)/g, '<br/>').trim();
+  });
+  Vue.filter('timespan', function (value) {
+      if(value<60){
+        return value + ' sec';
+      } else if(value<3600){
+        return value/60 + ' min';
+      } else {
+        return value/3600 + ' hrs';
+      }
+      return moment(value).format("0.0").toLowerCase();//.replace(/(?:\r\n|\r|\n)/g, '<br/>').trim();
   });
   Vue.filter('striphtml', function (value) {
     var div = document.createElement("div");

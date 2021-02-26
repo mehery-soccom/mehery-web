@@ -16,7 +16,7 @@
                                             <div class="widget-subheading">Total Session</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-success">10,375</div>
+                                            <div class="widget-numbers text-success">{{summary.uniqueConversation | number}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -31,7 +31,7 @@
                                             <div class="widget-subheading">Total I/O messages</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-primary">31,786</div>
+                                            <div class="widget-numbers text-primary">{{summary.totalMsgExchanged | number}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -47,10 +47,10 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Lead Messenger</div>
-                                            <div class="widget-subheading">WhatsApp</div>
+                                            <div class="widget-subheading">{{summary.leadMessanger.contactType.replace('MESSAGE_','')}}</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-danger">72.23<small class="opacity-5">%</small></div>
+                                            <div class="widget-numbers text-danger">{{summary.leadMessanger.percentage}}<small class="opacity-5">%</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                             <div class="widget-subheading">Start Lag</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-success">5.75 <small class="opacity-5"> sec</small></div>
+                                            <div class="widget-numbers text-success">{{summary.startLag}} <small class="opacity-5"> sec</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                             <div class="widget-subheading">Conversation Duration</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-primary">93 <small class="opacity-5"> sec</small></div>
+                                            <div class="widget-numbers text-primary">{{summary.converDuration}} <small class="opacity-5"> sec</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
                                             <small class="opacity-5"></small>
-                                            <span>874</span></div>
+                                            <span>{{summary.openConversation | number}}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -286,24 +286,42 @@
                 }
             },
             summary : {
-
+                agentName: null,
+                contactType: {},
+                converDuration: 93,
+                filter: "DATE_RANGE",
+                leadMessanger: {contactType: "MESSAGE_WEBSITE", noOfMessage: 26, totalContactMessage: 27, percentage: 96.3},
+                contactType: "MESSAGE_WEBSITE",
+                noOfMessage: 26,
+                percentage: 96.3,
+                totalContactMessage: 27,
+                msgCountLst: null,
+                openConversation: 874,
+                peakLoad: 50000,
+                startLag: 5.75,
+                totalInMsgExchanged: 0,
+                totalMsgExchanged: 31786,
+                totalOutMsgExchanged: 0,
+                uniqueConversation: 3504560
             }
         }),
-
+        mounted : function (argument) {
+          this.dateRangeOnUpdate();
+        },
         methods: {
           async loadAnalytics (){
             var resp = await this.$store.dispatch('LoadAnalytics',{
               "agent": "TEAM",
-              "contactType": "MESSAGE_TWITTER",
-              //"dateRange1": this.input.daterange.startDate,
-              //"dateReange2": this.input.daterange.endDate
+              "contactType": {},
+              "dateRange1": this.input.daterange.startDate,
+              "dateReange2": this.input.daterange.endDate
             });
-            this.summary = resp[0];
+            this.summary = resp[5];
           },
           dateRangeOnUpdate : function (r) {
                console.log("dateRangeOnUpdate",r);
-               this.input.daterange.startDate = r.startDate.getTime();
-               this.input.daterange.endDate = r.endDate.getTime();
+               this.input.daterange.startDate = this.input.daterange.startDate.getTime();
+               this.input.daterange.endDate = this.input.daterange.endDate.getTime();
                this.loadAnalytics();
           }
         },

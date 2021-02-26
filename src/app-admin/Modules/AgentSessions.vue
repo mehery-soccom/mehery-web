@@ -4,7 +4,7 @@
         :daterange=input.daterange v-on:dateRangeOnUpdate="dateRangeOnUpdate" ></page-title>
 
 
-       <b-table :striped=true
+       <b-table id="agent-session-list" :striped=true
                      :bordered=true
                      :outlined=false
                      :small=true
@@ -12,9 +12,18 @@
                      :dark=false
                      :fixed=false
                      :foot-clone=false
-                     :items="sessions"
-                     :fields="fields">
-
+                     :per-page="sessions.perPage"
+                     :current-page="sessions.currentPage"
+                     :items="sessions.items"
+                     :fields="sessions.fields">
+                <template #cell(assignedToAgent)="row">
+                    <font-awesome-icon v-if="row.item.mode=='BOT'" icon="robot" :style="{ color: 'grey' }" />
+                    <font-awesome-icon v-if="row.item.mode=='AGENT'" icon="user" :style="{ color: 'grey' }" />
+                    &nbsp;{{ row.item.assignedToAgent}}
+                </template>
+                <template #cell(contactId)="row">
+                    {{ row.item.contactName || row.item.contactId}}
+                </template>
                 <template #cell(startSessionStamp)="row">
                     {{ row.item.startSessionStamp | formatDate}}
                 </template>
@@ -23,15 +32,22 @@
                 </template>
                 <template #cell(closeSessionStamp)="row">
                     {{ row.item.closeSessionStamp | formatDate}}
-                    <font-awesome-icon icon="circle" />
+                    <font-awesome-icon v-if="row.item.active" icon="circle" :style="{ color: 'green' }" />
                 </template>   
                 <template #cell(actions)="row">
-                  <b-button size="sm" @click="activateAgent(row.item, row.index, $event.target)" variant="outline-primary">
+                  <b-button size="xs" @click="activateAgent(row.item, row.index, $event.target)" variant="outline-primary">
                     {{ row.item.isactive == "Y" ? 'DeActivate' : 'Activate' }} Agent
                   </b-button>
                 </template>
 
         </b-table>
+
+          <b-pagination
+              v-model="sessions.currentPage"
+              :total-rows="sessions.rows"
+              :per-page="sessions.perPage"
+              aria-controls="agent-session-list"
+            ></b-pagination>
 
     </div>
 
@@ -54,7 +70,8 @@
         faAngleDown,
         faAngleUp,
         faTh,
-        faCircle
+        faCircle,
+        faRobot,faUser
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
     import lineeg from '../../Modules/Charts/Chartjs/MyLine'
@@ -66,7 +83,7 @@
         faAngleUp,
         faTh,
         faCalendarAlt,
-        faCircle
+        faCircle,faRobot,faUser
     );
 
     export default {
@@ -78,7 +95,7 @@
             lineeg,
         },
         data: () => ({
-            heading: 'Agent Sessions',
+            heading: 'Chat Sessions',
             subheading: 'Select date range for report',
             icon: 'pe-7s-plane icon-gradient bg-tempting-azure',
             input : {
@@ -87,14 +104,20 @@
                     endDate : null,
                 }
             },
-            fields: [ { key : 'assignedToAgent', label : "Agent" },{ key : 'contactId', label : "Contact" },
-                { key : 'startSessionStamp', label : "Start@" },
-                { key : 'fistResponseStamp', label : "Agent@" },
-                //{ key : 'lastInComingStamp', label : "lastInComingStamp" },
-                //{ key : 'lastResponseStamp', label : "lastResponseStamp" },
-                { key : 'closeSessionStamp', label : "Closed@" },
-                { key : 'actions', label : "Action" }],
-            sessions : [{},{}],
+            sessions : {
+                fields: [ { key : 'assignedToAgent', label : "Assigned" },{ key : 'contactId', label : "Contact" },
+                    { key : 'startSessionStamp', label : "Start@" },
+                    { key : 'fistResponseStamp', label : "Agent@" },
+                    //{ key : 'lastInComingStamp', label : "lastInComingStamp" },
+                    //{ key : 'lastResponseStamp', label : "lastResponseStamp" },
+                    { key : 'closeSessionStamp', label : "Closed@" },
+                    //{ key : 'actions', label : "Action" }
+                ],
+                items : [],
+                perPage: 25,
+                currentPage: 1,
+                rows : 0
+            },
             input : {
                 daterange : {
                     startDate : null,
@@ -113,7 +136,8 @@
               "startStamp": this.input.daterange.startDate,
               "endStamp": this.input.daterange.endDate
             });
-            this.sessions = resp.results;
+            this.sessions.items = resp.results;
+            this.sessions.rows = this.sessions.items.length;
             console.log("sessions",resp,this.sessions )
           },
           dateRangeOnUpdate : function (r) {

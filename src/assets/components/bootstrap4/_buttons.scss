@@ -115,6 +115,10 @@ fieldset:disabled a.btn {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
 }
 
+.btn-xs {
+  @include button-size($btn-padding-y-sm * .7, $btn-padding-x-sm * .7, $btn-font-size-sm * .7, $btn-line-height-sm *.7, $btn-border-radius-sm * .7);
+}
+
 
 //
 // Block button

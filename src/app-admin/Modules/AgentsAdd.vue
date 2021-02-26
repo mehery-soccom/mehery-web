@@ -62,11 +62,11 @@
                                         <select multiple="" type="select" id="exampleCustomMutlipleSelect"
                                                  name="customSelect" class="custom-select"
                                                  v-model="newAgent.agent_channels_list">
-                                                <option>WhatsApp</option>
-                                                <option>Facebook</option>
-                                                <option>Twitter</option>
-                                                <option>Telegram</option>
-                                                <option>Website</option>
+                                                <option>WHATSAPP</option>
+                                                <option>FACEBOOK</option>
+                                                <option>TWITTER</option>
+                                                <option>TELEGRAM</option>
+                                                <option>WEBSITE</option>
                                           </select>
                                     </div>
 
