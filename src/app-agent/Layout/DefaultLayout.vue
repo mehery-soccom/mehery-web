@@ -4,7 +4,7 @@
         <div class="container-fluid h-100">
             <div class="row h-100">
                 <div class="col-md-3 col-xl-3 chat">
-                      <Contacts/>
+                      <Contacts v-on:loaded="closeLoading"/>
                 </div>
                 <div class="col-xl-6 chat" 
                     v-bind:class="{
@@ -56,7 +56,7 @@
             MyFlags
         }),
         mounted:function(){
-            this.closeLoading(); //method1 will execute at pageload
+            //this.closeLoading(); //method1 will execute at pageload
         },
         methods: {
             closeLoading : function (argument) {

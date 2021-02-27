@@ -7,6 +7,8 @@ import store from './store';
 import axios from 'axios';
 
 import BootstrapVue from "bootstrap-vue"
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import AppAdmin from './AppAdmin'
 import AppAgent from './AppAgent'
@@ -23,6 +25,7 @@ axios.defaults.baseURL = (function() {
 console.log("ADMIN====",axios.defaults.baseURL);
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
+Vue.use(VueLoading);
 
 ;(function mapper(condition){ //Funtion
 	var result = (typeof condition == "function") ? condition() : condition;

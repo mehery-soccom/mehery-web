@@ -38,7 +38,13 @@
 
                 </div>
                 <div class="card-body msg_card_body" v-show="!showMediaOptions">
+
                     <div class="msg_card_body-bubbles">
+
+        <loading :active.sync="isLoading" 
+        :can-cancel="false"  
+        :loader="'dots'" opacity="0.3"
+        :is-full-page="false"></loading>
 
 <div v-if="!activeChat" class="msg_card_body-logo">
     
@@ -149,10 +155,12 @@
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
     import { MyFlags,MyDict,MyConst } from './../global';
+    import Loading from 'vue-loading-overlay';
 
     export default {
         components: {
             'font-awesome-icon': FontAwesomeIcon,
+            Loading: Loading
         },
         computed : {
             inputTextEnabled : function (argument) {
@@ -189,7 +197,8 @@
             showMediaOptions : false,
             showChatOptions : false,
             lastMessageId : null,ilastMessageId :  null,
-            MyDict,MyFlags,MyConst
+            MyDict,MyFlags,MyConst,
+            isLoading : false
         }),
         created () {
             // fetch the data when the view is created and the data is
@@ -309,7 +318,8 @@
                 }
 
                 if(!activeChat.messages && !activeChat.active){
-                    console.log("GetSessionChats...")
+                    console.log("GetSessionChats...");
+                    this.isLoading = true;
                     var resp = await this.$store.dispatch('GetSessionChats',{
                         contactId : this.activeChat.contactId,
                         sessionId : this.activeChat.sessionId,
@@ -318,6 +328,7 @@
                     });
                     console.log("resp",resp)
                     activeChat.messages = resp;
+                     this.isLoading = false;
                 }
             },
         },

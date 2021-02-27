@@ -4,13 +4,16 @@
     <div class="card-header">
         <center>History</center>
     </div>
-    <div class="card-body">
+    <div class="card-body vld-parent">
+        <loading :active.sync="isLoading" 
+        :can-cancel="false"  
+        :loader="'dots'"
+        :is-full-page="false"></loading>
+
         <div class="information" style="display: flex;" hidden>
                 <img :src="activeChat.profilePic || MyDict.profilePic" class="rounded-circle user_img">
         </div>
         <small>
-            
-       
         <b-table id="agent-session-list" :striped=true
                      :bordered=true
                      :outlined=false
@@ -81,9 +84,11 @@
 <script>
 
     import { MyFlags,MyDict,MyConst } from './../global';
+    import Loading from 'vue-loading-overlay';
 
     export default {
         components: {
+            Loading: Loading
         },
         computed : {
             activeChat : function(){ 
@@ -116,6 +121,7 @@
                 currentPage: 1,
                 rows : 0
             },
+            isLoading : false
         }),
         created () {
             // fetch the data when the view is created and the data is
@@ -137,6 +143,7 @@
                 if(!this.activeChat){
                     return;
                 }
+                this.isLoading = true;
                 var resp = await this.$store.dispatch('GetSessions',{
                     contactId : this.activeChat.contactId,
                     contactType : this.activeChat.contactType
@@ -145,7 +152,8 @@
                     return  (b.startSessionStamp||b.fistResponseStamp||b.lastInComingStamp||b.assignedDeptStamp||b.assignedAgentStamp||b.lastResponseStamp||b.closeSessionStamp) - (a.startSessionStamp||a.fistResponseStamp||a.lastInComingStamp||a.assignedDeptStamp||a.assignedAgentStamp||a.lastResponseStamp||a.closeSessionStamp);
                 });
                 this.sessions.rows = this.sessions.items.length;
-                console.log("sessions",resp,this.sessions )
+                console.log("sessions",resp,this.sessions );
+                this.isLoading = false;
             },
         },
 

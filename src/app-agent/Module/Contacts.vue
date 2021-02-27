@@ -123,6 +123,7 @@
         methods: {
             async loadChats(){
                 await this.$store.dispatch('GetChats');
+                this.$emit('loaded', {});
             },
             async toggleOnline(){
                 await this.$store.dispatch('OnlineStatus');
