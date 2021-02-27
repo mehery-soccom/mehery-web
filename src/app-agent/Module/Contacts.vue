@@ -19,9 +19,9 @@
         </div>
         <div class="card-body contacts_body">
             <ul class="contacts contact-list">
-                <router-link tag="li" v-for="chat in activeChats" 
+                <router-link tag="li" v-for="(chat,index) in activeChats"  :key="index"
                     v-bind:class="{data_assigned : chat.assigned, data_unassigned : !chat.assigned }"
-                     :id="chat.contactId" :to="'/app/chat/' + chat.contactId" >
+                     :id="chat.contactId" :to="'/app/chat/' + chat.contactId + '/' + chat.sessionId" >
                     <div class="d-flex bd-highlight contact-preview">
                         <div class="img_cont">
                             <img :src="chat.profilePic || MyDict.profilePic" class="rounded-circle user_img" alt="profilpicture">
@@ -108,11 +108,17 @@
              search: '',
              //chats : this.$store.getters.StateChats
         }),
-        created () {
+        mounted () {
             // fetch the data when the view is created and the data is
             // already being observed
             console.log("loading...")
             this.loadChats();
+           
+        },
+        watch: {
+            '$route.params.sessionId': function (contactId) {
+                 this.$forceUpdate();
+            }
         },
         methods: {
             async loadChats(){

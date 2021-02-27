@@ -21,14 +21,16 @@ const state = {
   chatsCounter : 1,
   meta : null,
   mediaOptions : null,
-  quickReplies : []
+  quickReplies : [],
+  chatHistory : { sessions : []}
 };
 
 const getters = {
     //Contacts
   StateChats: (state) => state.chats,
   StateMeta: (state) => state.meta,
-  StateMediaOptions: (state) => state.mediaOptions
+  StateMediaOptions: (state) => state.mediaOptions,
+  StateChatHistory: (state) => state.chatHistory.sessions
 };
 
 const actions = {
@@ -76,13 +78,15 @@ const actions = {
     for(var c in state.chats){
       if(state.chats[c].sessionId == chat.sessionId){
         state.chats[c].active = !!chat.active;
-        if(!chat.active)
-          state.chats.splice(c,1);
-         commit("setChats", state.chats);
-        return;
+        state.chats[c].assigned = !!chat.assigned;
+        console.log(state.chats[c],chat)
+        state.chats.splice(c,1);
+        //commit("setChats", state.chats);
+        //return;
       }
     }
-    state.chats.push(chat);
+    if(chat.active)
+      state.chats.push(chat);
     commit("setChats", state.chats);
   },
 
@@ -174,6 +178,21 @@ const actions = {
     //commit("setMediaOptions", response.data);
   },
 
+  async GetSessions({ commit },options) {
+    if(state.chatHistory.contactId == options.contactId){
+      return state.chatHistory.sessions;
+    }
+    let response = await axios.get("/api/sessions/contact",{params : options });
+    state.chatHistory.contactId = options.contactId;
+    state.chatHistory.sessions = response.data.results;
+    commit("setChatHistory",state.chatHistory)
+    return response.data.results;
+  },
+  async GetSessionChats({ commit },options) {
+    let response = await axios.post("/api/sessions/messages",options);
+    return response.data.results;
+  },
+
 };
 
 const mutations = {
@@ -189,6 +208,9 @@ const mutations = {
       }
     }
     state.chats = chats;
+  },
+  setChatHistory(state, chatHistory) {
+    state.chatHistory = chatHistory;
   },
   setMeta(state, meta) {
     state.meta = meta;

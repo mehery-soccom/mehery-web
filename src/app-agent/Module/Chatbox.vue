@@ -12,7 +12,7 @@
                             v-if="activeChat"
                             @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
                             <span class="user_name">{{activeChat.name}}</span>
-                            <p class="user_text">{{activeChat.ilastmsg.timestamp | formatDate}} </p>
+                            <p v-if="activeChat.ilastmsg" class="user_text">{{activeChat.ilastmsg.timestamp | formatDate}} </p>
                         </div>
                         <div class="video_cam">
                             <span><i class="fas fa-video" hidden></i></span>
@@ -30,8 +30,8 @@
                         <div class="action_menu" v-show="showChatOptions">
                             <ul style="padding-top: 10px">
                                 <li @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
-                                    <i class="fas fa-user-circle"></i> User Profile</li>
-                                <li><i class="fa fa-check-circle"></i> Resolve Ticket</li>
+                                    <i class="fas fa-user-circle"></i> Chat Hisotry</li>
+                                <li @click="closSession"><i class="fa fa-check-circle"></i> Resolve Ticket</li>
                             </ul>
                         </div>  
                     </div>
@@ -76,7 +76,7 @@
 
 </div>
                     </div>
-                    <div class="msg_card_body-panel">
+                    <div v-if="activeChat && activeChat.active" class="msg_card_body-panel">
                         <hr/>
                         <div class="msg_card_body-panel-tags">
                             <span v-if="quickReplies" v-for="quickReply in quickReplies" 
@@ -109,7 +109,9 @@
                 </div>
                 
                 <div class="card-footer">
-                    <div class="input-group my-input-section" v-bind:class="{ fade : !sendEnabled}" >
+                    <div class="input-group my-input-section" 
+                        v-bind:class="{ fade : !sendEnabled}"
+                        >
                         <div class="input-group-append">
                             <span 
                             @click="showMediaOptions=!showMediaOptions"
@@ -154,19 +156,26 @@
         },
         computed : {
             inputTextEnabled : function (argument) {
-               return !!this.$route.params.id;
+               return !!this.$route.params.contactId && !!this.activeChat && this.activeChat.active;
             },
             sendEnabled : function (argument) {
-               return !!this.$route.params.id;
+               return !!this.$route.params.contactId && !!this.activeChat && this.activeChat.active;
             },
             activeChat : function(){ 
-                console.log("id",this.$route.params.id); 
+                console.log("id",this.$route.params.contactId,this.$route.params.sessionId); 
                 for(var i in this.$store.getters.StateChats){
                     var chat = this.$store.getters.StateChats[i];
-                    if(this.$route.params.id == chat.contactId){
+                    if(this.$route.params.sessionId == chat.sessionId){
                         return chat;
                     }
                 }
+                for(var i in this.$store.getters.StateChatHistory){
+                    var chat = this.$store.getters.StateChatHistory[i];
+                    if(this.$route.params.sessionId == chat.sessionId){
+                        return chat;
+                    }
+                }
+
                 return null;
             },
             mediaOptions : function(){ 
@@ -198,9 +207,12 @@
             this.loadQuickReplies();
         },
         watch: {
-            '$route.params.id': function (id) {
-               this.scrollToBottom();
-               this.loadQuickReplies();
+            '$route.params.contactId': function (contactId) {
+                this.scrollToBottom();
+                this.loadQuickReplies();
+            },
+            '$route.params.sessionId': function (contactId) {
+                this.loadMessages();
             }
         },
         methods: {
@@ -245,6 +257,7 @@
             },
             closSession :  function () {
                 this.sendText("/exit_chat");
+                this.$router.push("/app/chat")
             },
             scrollToBottom : function (argument) {
                 var activeChat = this.activeChat;
@@ -252,6 +265,9 @@
                     return;
                 }
                 var msgs = activeChat.messages;
+                if(!msgs || !msgs.length){
+                    return;
+                }
                 var lastMessageId = msgs[msgs.length-1].messageId;
                 if(this.lastMessageId == lastMessageId){
                     return;
@@ -275,12 +291,34 @@
                     return;
                 }
                 var ilastmsg = activeChat.ilastmsg;
+                if(!ilastmsg){
+                    return;
+                }
                 if(this.ilastMessageId == ilastmsg.messageId){
                     return;
                 }
                 this.ilastMessageId = ilastmsg.messageId;
                 var quickReplies = await this.$store.dispatch('LoadQuickReplies',ilastmsg.tags);
                 this.quickReplies = quickReplies;
+            },
+            async loadMessages(){
+                console.log("loadMessages...")
+                var activeChat = this.activeChat;
+                if(!activeChat){
+                    return;
+                }
+
+                if(!activeChat.messages && !activeChat.active){
+                    console.log("GetSessionChats...")
+                    var resp = await this.$store.dispatch('GetSessionChats',{
+                        contactId : this.activeChat.contactId,
+                        sessionId : this.activeChat.sessionId,
+                        contactType : this.activeChat.contactType,
+                        name : this.activeChat.name
+                    });
+                    console.log("resp",resp)
+                    activeChat.messages = resp;
+                }
             },
         },
 

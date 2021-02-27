@@ -448,6 +448,7 @@ padding: 5px;
 .card.card_contact_profile .card-body {
   color : #000!important;
   background-color: #FFF!important;
+  overflow: auto;
 }
 .new-message{
     border-radius: 50%;
