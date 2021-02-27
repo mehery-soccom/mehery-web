@@ -148,7 +148,7 @@
                     contactId : this.activeChat.contactId,
                     contactType : this.activeChat.contactType
                 });
-                this.sessions.items = resp.sort(function(a,b){
+                this.sessions.items = (resp || []).sort(function(a,b){
                     return  (b.startSessionStamp||b.fistResponseStamp||b.lastInComingStamp||b.assignedDeptStamp||b.assignedAgentStamp||b.lastResponseStamp||b.closeSessionStamp) - (a.startSessionStamp||a.fistResponseStamp||a.lastInComingStamp||a.assignedDeptStamp||a.assignedAgentStamp||a.lastResponseStamp||a.closeSessionStamp);
                 });
                 this.sessions.rows = this.sessions.items.length;
