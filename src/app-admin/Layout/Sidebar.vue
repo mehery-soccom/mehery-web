@@ -62,7 +62,7 @@
                     },
                     {
                         title: 'Summary',
-                        icon: 'pe-7s-rocket',
+                        icon: 'pe-7s-graph3',
                         href: '/',
                         enabled : true
                     },
@@ -72,7 +72,7 @@
                     },
                     {
                         title: 'Sessions',
-                        icon: 'pe-7s-rocket',
+                        icon: 'pe-7s-chat',
                         href: '/app/reports/sessions',
                         enabled : true
                     },
@@ -83,20 +83,20 @@
                    {
                         title: 'Agents',
                         icon: 'pe-7s-users',
-                        href: '/app/admins/agents/list',
-                        child: [
-                            {
-                                enabled : true,
-                                href: '/app/admins/agents/add',
-                                title: 'Add Agent',
-                            },
-                            {
-                                enabled : true,
-                                href: '/app/admins/agents/teams',
-                                title: 'Teams',
-                            },
-
-                        ]
+                        enabled : true,
+                        href: '/app/admins/agents/list'
+                    },
+                    {
+                        enabled : true,
+                        icon: 'pe-7s-add-user',
+                        href: '/app/admins/agents/add',
+                        title: 'Add Agent',
+                    },
+                    {
+                        enabled : true,
+                        href: '/app/admins/agents/teams',
+                        title: 'Teams',
+                        icon: 'pe-7s-network',
                     },
                     {
                         title: 'Dashboards',

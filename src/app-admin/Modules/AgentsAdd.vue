@@ -8,19 +8,25 @@
                         <form class="">
                     
                             <div class="position-relative form-group">
+                              <ValidationProvider v-slot="v" rules="required">
                                     <label for="examplePassword" class="">Name</label>
                                     <input name="agent_name" id="examplePassword"
                                      placeholder="John Doe" type="text"
                                       class="form-control" v-model="newAgent.agent_name">
+                                      <span class="v-input-error">{{ v.errors[0] }}</span>
+                              </ValidationProvider>
                               </div>
 
                             <div class="position-relative form-group">
+                              <ValidationProvider v-slot="v" rules="required|email">
                                 <label for="exampleEmail" class="">Email</label>
                                 <input name="email"
                                         id="exampleEmail"
                                         placeholder="abc@xyz.com"
                                         type="email"
                                         class="form-control" v-model="newAgent.agent_email">
+                                 <span class="v-input-error" >{{ v.errors[0] }}</span>
+                              </ValidationProvider>
                             </div>
                             <div class="position-relative form-group">
                                 <label for="exampleEmail" class="">Agent Code</label>
@@ -147,7 +153,6 @@
 
     import PageTitle from "../Layout/PageTitleAction.vue";
 
-
     function newAgent() {
       return {
               "agent_code": "",
@@ -164,7 +169,7 @@
         data: () => ({
             heading: 'Add Agent',
             subheading: 'Enter Details for new Agent, once created agent will recieve email to reset password',
-            icon: 'pe-7s-add-user icon-gradient bg-premium-dark',
+            icon: 'pe-7s-add-user icon-gradient bg-tempting-azure',
             actions : [],
             newAgent : newAgent()
         }),

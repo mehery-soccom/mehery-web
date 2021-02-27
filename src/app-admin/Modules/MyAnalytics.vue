@@ -247,7 +247,7 @@
         data: () => ({
             heading: 'Analytics Dashboard',
             subheading: 'Select date range for report',
-            icon: 'pe-7s-plane icon-gradient bg-tempting-azure',
+            icon: 'pe-7s-graph3 icon-gradient bg-tempting-azure',
             graphs : [
                 {
                     title : "Conversations - Cumulative",

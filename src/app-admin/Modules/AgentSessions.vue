@@ -97,7 +97,7 @@
         data: () => ({
             heading: 'Chat Sessions',
             subheading: 'Select date range for report',
-            icon: 'pe-7s-plane icon-gradient bg-tempting-azure',
+            icon: 'pe-7s-chat icon-gradient bg-tempting-azure',
             input : {
                 daterange : {
                     startDate : null,

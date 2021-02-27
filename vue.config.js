@@ -16,6 +16,7 @@ module.exports = {
         disableHostCheck: true,
         allowedHosts: [
           'app.mehery.com','api.mehery.com',
+          'api.lalittanwar.com',
           'subdomain.host.com',
           'subdomain2.host.com',
           'host2.com',

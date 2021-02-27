@@ -29,19 +29,25 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Add Team </h5>                    
                             <div class="position-relative form-group">
+                              <ValidationProvider v-slot="v" rules="required">
                                     <label for="examplePassword" class="">Name</label>
                                     <input name="agent_name" id="examplePassword"
                                      placeholder="Online Team" type="text"
                                       class="form-control" v-model="newTeam.dept_name">
+                                      <span class="v-input-error">{{ v.errors[0] }}</span>
+                              </ValidationProvider>
                               </div>
 
                             <div class="position-relative form-group">
+                              <ValidationProvider v-slot="v" rules="required|email">
                                 <label for="exampleEmail" class="">Email</label>
                                 <input name="email"
                                         id="exampleEmail"
                                         placeholder="abc@xyz.com"
                                         type="email"
                                         class="form-control" v-model="newTeam.dept_email">
+                                        <span class="v-input-error">{{ v.errors[0] }}</span>
+                              </ValidationProvider>
                             </div>
                             <div class="position-relative form-group">
                                 <label for="exampleEmail" class="">Code</label>
@@ -88,7 +94,7 @@
         data: () => ({
             heading: 'Teams',
             subheading: 'Once created, can be used to assign to Agent',
-            icon: 'pe-7s-users icon-gradient bg-premium-dark',
+            icon: 'pe-7s-network icon-gradient bg-tempting-azure',
             actions : [],
             fields: [ { key : 'dept_name', label : "Name" }, { key : 'dept_code', label : "Code" }, 
               { key : 'dept_email', label : "Email" },

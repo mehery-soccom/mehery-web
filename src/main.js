@@ -24,8 +24,10 @@ axios.defaults.baseURL = (function() {
 })();
 console.log("ADMIN====",axios.defaults.baseURL);
 Vue.config.productionTip = false;
+
 Vue.use(BootstrapVue);
 Vue.use(VueLoading);
+
 
 ;(function mapper(condition){ //Funtion
 	var result = (typeof condition == "function") ? condition() : condition;
