@@ -161,3 +161,8 @@
 
 
 </script>
+<style type="text/css" scoped>
+    .contact_type{
+        height: 23px;
+    }
+</style>

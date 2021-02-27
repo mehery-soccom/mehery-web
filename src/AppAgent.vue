@@ -113,22 +113,17 @@
       document.head.appendChild(css);
 
       var THAT =  this;
-
-      tunnel.init().instance()
+      this.tunnel = tunnel.init().instance()
         .on("/agent/onmessage", function(msg){
-            console.log("/agent/onmessage", msg, msg.messageIdExt);
             msg.version = 3;
             THAT.$store.dispatch('ReadChat', msg);
         }).on("/dept/onassign-"+window.CONST.APP_DEPT, function(testresponse){
-          console.log("/dept/onassign-"+window.CONST.APP_DEPT, testresponse);
           THAT.$store.dispatch('AddChat', testresponse);
         }).on("/dept/onassign-__DEPT__", function(testresponse){
-           console.log("/dept/onassign-__DEPT__", testresponse);
            THAT.$store.dispatch('AddChat', testresponse);
         });
     },
     beforeUnmount (){
-        console.log("====beforeUnmount")
         this.tunnel.off();
     },
   }

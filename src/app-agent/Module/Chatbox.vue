@@ -1,7 +1,7 @@
 <template>
           <div class="card card-shadow">
                 <div class="card-header msg_head chat-head">
-                    <div class="d-flex bd-highlight">
+                    <div class="d-flex bd-highlight chat-header-left">
                         <div class="img_cont" 
                             v-if="activeChat"
                             @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
@@ -23,10 +23,10 @@
                             class="btn"><i class="fa fa-check-circle"></i></button>                            
                         </div>
                     </div>
-                    <div    @mouseover="showChatOptions = true"
+                    <div  class="chat-header-right"  @mouseover="showChatOptions = true"
                             @mouseleave="showChatOptions = false">
                         <span id="action_menu_btn"
-                        ><i class="fas fa-ellipsis-v"></i></span>
+                        ><i class="fas fa-user-clock"></i></span>
                         <div class="action_menu" v-show="showChatOptions">
                             <ul style="padding-top: 10px">
                                 <li @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
@@ -156,6 +156,7 @@
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
     import { MyFlags,MyDict,MyConst } from './../global';
     import Loading from 'vue-loading-overlay';
+    import tunnel from './../../services/tunnel';
 
     export default {
         components: {
@@ -337,3 +338,45 @@
 
 
 </script>
+<style type="text/css" scoped>
+    .chat-header-left{
+        float: left;
+    }
+    .chat-header-right{
+        float: right;
+    }
+    #action_menu_btn{
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 60px;
+    }
+    .action_menu{
+        z-index: 1;
+        position: absolute;
+        padding: 15px 0;
+        background-color: rgb(255 255 255);
+        color: #060606;
+        border-radius: 5px;
+        top: 15px;
+        right: 10px;
+        border: solid 1px #d8d8d8;
+      }
+      .action_menu ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .action_menu ul li{
+        width: 100%;
+        padding: 10px 15px;
+        margin-bottom: 5px;
+      }
+      .action_menu ul li i{
+
+      }
+      .action_menu ul li:hover{
+        cursor: pointer;
+        background-color: rgba(0,0,0,0.2);
+  }
+</style>

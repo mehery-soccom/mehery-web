@@ -75,7 +75,7 @@
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
     import { MyFlags,MyDict,MyConst } from './../global';
-
+    import tunnel from './../../services/tunnel';
 
     export default {
         components: {
@@ -111,13 +111,38 @@
         mounted () {
             // fetch the data when the view is created and the data is
             // already being observed
-            console.log("loading...")
             this.loadChats();
-           
+            var THAT =  this;
+            this.tunnel = tunnel.init().instance()
+                .on("/agent/onmessage", function(msg){
+                    var activeChats = THAT.activeChats;
+                    if(!activeChats){
+                        return;
+                    }
+                    if(THAT.$route.params.sessionId != msg.sessionId){
+                        for (var i in activeChats) {
+                            var chat = activeChats[i];
+                            if(msg.sessionId == chat.sessionId){
+                                 chat.newmsg = true;
+                                 THAT.$forceUpdate();
+                            }
+                        }
+                    }
+                });
+        },
+        beforeUnmount (){
+            this.tunnel.off();
         },
         watch: {
-            '$route.params.sessionId': function (contactId) {
-                 this.$forceUpdate();
+            '$route.params.sessionId': function (sessionId) {
+                var activeChats = this.activeChats;
+                for (var i in activeChats) {
+                    var chat = activeChats[i];
+                    if(sessionId == chat.sessionId){
+                         chat.newmsg = false;
+                         this.$forceUpdate();
+                    }
+                }
             }
         },
         methods: {
@@ -135,10 +160,7 @@
 
             }
         },
-
     }
-
-
 </script>
 <style type="text/css" scoped="">
     .contacts_body{
@@ -151,6 +173,6 @@
         background-color: #f2f3f8!important;
     }
     ul.contacts .user_info *, ul.contacts .contact-time p{
-       color : #252525 !important
+       color : rgba(21, 21, 21, 0.68) !important
     }
 </style>

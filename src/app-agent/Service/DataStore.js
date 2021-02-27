@@ -128,6 +128,7 @@ const actions = {
         } else {
           state.chats[c].messages.splice(index, 1, m);
         }
+        //state.chats[c].newmsg = true;
         break;
       }
     }
