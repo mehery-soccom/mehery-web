@@ -43,7 +43,7 @@
 
         <loading :active.sync="isLoading" 
         :can-cancel="false"  
-        :loader="'dots'" opacity="0.3"
+        :loader="'dots'" :opacity="0.3"
         :is-full-page="false"></loading>
 
 <div v-if="!activeChat" class="msg_card_body-logo">
