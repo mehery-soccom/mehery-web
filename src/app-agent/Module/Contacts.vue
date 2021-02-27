@@ -140,3 +140,17 @@
 
 
 </script>
+<style type="text/css" scoped="">
+    .contacts_body{
+        background-color: #f2f3f8;
+    }
+    .contacts li.router-link-exact-active{
+        background-color: rgb(0 0 0 / 6%)
+    }
+    .card.card_contact_profile .card-body {
+        background-color: #f2f3f8!important;
+    }
+    ul.contacts .user_info *, ul.contacts .contact-time p{
+       color : #252525 !important
+    }
+</style>
