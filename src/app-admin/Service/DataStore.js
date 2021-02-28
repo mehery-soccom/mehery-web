@@ -91,7 +91,7 @@ const actions = {
   },
 
   async LoadAnalytics({ commit },options) {
-    let response = await axios.post("/admin/dashboard-analytics",options);
+    let response = await axios.post("/admin/agent-dashboard-analytics",options);
     validateResponse(response);
     return response.data;
   },

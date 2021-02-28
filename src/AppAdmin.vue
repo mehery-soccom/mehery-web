@@ -15,6 +15,7 @@
   import { ValidationProvider } from 'vee-validate';
   import { extend } from 'vee-validate';
   import { required, email } from 'vee-validate/dist/rules';
+  import formatters from './services/formatters';  
 
   Vue.component('admin-default-layout', () => import('./app-admin/Layout/baseLayout.vue'));
   Vue.component('admin-userpages-layout', () => import('./app-admin/Layout/pagesLayout.vue'));

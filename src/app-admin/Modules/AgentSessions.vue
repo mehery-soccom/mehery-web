@@ -74,7 +74,6 @@
         faRobot,faUser
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-    import lineeg from '../../Modules/Charts/Chartjs/MyLine'
 
     library.add(
         faTrashAlt,
@@ -92,7 +91,6 @@
             VuePerfectScrollbar,
             'font-awesome-icon': FontAwesomeIcon,
            // chart1,chart2,chart3,
-            lineeg,
         },
         data: () => ({
             heading: 'Chat Sessions',

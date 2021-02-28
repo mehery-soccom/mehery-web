@@ -47,10 +47,14 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Lead Messenger</div>
-                                            <div class="widget-subheading">{{summary.leadMessanger.contactType.replace('MESSAGE_','')}}</div>
+                                            <div class="widget-subheading"
+                                                v-if="summary.leadMessanger && summary.leadMessanger.contactType"
+                                            >{{summary.leadMessanger.contactType.replace('MESSAGE_','')}}</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-danger">{{summary.leadMessanger.percentage}}<small class="opacity-5">%</small></div>
+                                            <div class="widget-numbers text-danger"
+                                                v-if="summary.leadMessanger && summary.leadMessanger.contactType"
+                                            >{{summary.leadMessanger.percentage}}<small class="opacity-5">%</small></div>
                                         </div>
                                     </div>
                                 </div>
@@ -62,10 +66,10 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Peak Load</div>
-                                            <div class="widget-subheading">20 Jan 1030 to 1100</div>
+                                            <div class="widget-subheading">-</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning">5K</div>
+                                            <div class="widget-numbers text-warning">-</div>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +88,7 @@
                                             <div class="widget-subheading">Start Lag</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-success">{{summary.startLag}} <small class="opacity-5"> sec</small></div>
+                                            <div class="widget-numbers text-success">{{summary.startLag | timespan}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +103,7 @@
                                             <div class="widget-subheading">Conversation Duration</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-primary">{{summary.converDuration}} <small class="opacity-5"> sec</small></div>
+                                            <div class="widget-numbers text-primary">{{summary.converDuration | timespan}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +144,7 @@
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
                                             <small class="opacity-5"></small>
-                                            <span>530</span></div>
+                                            <span>-</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +163,7 @@
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
                                             <small class="opacity-5"></small>
-                                            <span>7.5</span></div>
+                                            <span>-</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +181,7 @@
                                 <div class="widget-numbers">
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
-                                            <span>564</span></div>
+                                            <span>-</span></div>
                                             <small class="opacity-5">%</small>
                                     </div>
                                 </div>
@@ -191,14 +195,20 @@
 
 
         <div class="row">
-            <div class="col-md-6 col-xl-6" v-for="graph in graphs">
-                <b-card :title="graph.title" class="main-card mb-3">
+            <div class="col-md-6 col-xl-6">
+                <b-card :title="'Messages - Team'" class="main-card mb-3" :key="chart.updated">
                   <lineeg
-                    :cdata="graph.data"
+                    :cdata="chart.summary"
                   ></lineeg>
                 </b-card>
             </div>
-
+            <div class="col-md-6 col-xl-6">
+                <b-card :title="'Messages - Individuals'" class="main-card mb-3" :key="chart.updated">
+                  <lineeg
+                    :cdata="chart.summaries"
+                  ></lineeg>
+                </b-card>
+            </div>
         </div>
 
 
@@ -225,7 +235,8 @@
         faTh,
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-    import lineeg from '../../Modules/Charts/Chartjs/MyLine'
+    import lineeg from './../Charts/MyLine'
+    import {newChartData,updateChartData} from './../Charts/MyLine'
 
     library.add(
         faTrashAlt,
@@ -235,6 +246,35 @@
         faTh,
         faCalendarAlt,
     );
+
+
+
+    function toMap(maps) {
+        var gbm = {};
+        for(var mapname in maps){
+            var map = maps[mapname] || {};
+            Object.keys(map.graphApiDetails || {}).map((key) => {
+                gbm[key] = gbm[key] || { 
+                    date : key,
+                    _date : key.split("-").reverse().join(""), 
+                    values : {}
+                }
+                gbm[key].values[map.agentName] = map.graphApiDetails[key]
+            })
+        }
+        var cData = newChartData();
+        Object.keys(gbm).sort(function (a,b) {
+            return gbm[a]._date - gbm[b]._date;
+        }).map(function(key){
+            var data = gbm[key];
+            cData.labels.push(key);
+            for(var agentName in data.values){
+                cData.series[agentName] = cData.series[agentName] || [];
+                cData.series[agentName].push(data.values[agentName])
+            }
+        });
+        return cData;
+    }
 
     export default {
         components: {
@@ -266,19 +306,6 @@
                     data : [65, 59, 80, 81, 56, 55, 40] 
                 },
             ],
-            stats :  {
-                "contactType": {},
-                "filter": "string",
-                "peakLoad": {
-                  "timestamp": 0,
-                  "total": 0
-                },
-                "todayMsgExchanged": 0,
-                "totalInMsgExchanged": 0,
-                "totalMsgExchanged": 0,
-                "totalOutMsgExchanged": 0,
-                "uniqueConversation": 0
-            },
             input : {
                 daterange : {
                     startDate : null,
@@ -286,25 +313,48 @@
                 }
             },
             summary : {
-                agentName: null,
-                contactType: {},
-                converDuration: 93,
-                filter: "DATE_RANGE",
-                leadMessanger: {contactType: "MESSAGE_WEBSITE", noOfMessage: 26, totalContactMessage: 27, percentage: 96.3},
-                contactType: "MESSAGE_WEBSITE",
-                noOfMessage: 26,
-                percentage: 96.3,
-                totalContactMessage: 27,
-                msgCountLst: null,
-                openConversation: 874,
-                peakLoad: 50000,
-                startLag: 5.75,
-                totalInMsgExchanged: 0,
-                totalMsgExchanged: 31786,
-                totalOutMsgExchanged: 0,
-                uniqueConversation: 3504560
-            }
+                "contactType": null,
+                "filter": null,
+                "agentName": "TEAM",
+                "totalInMsgExchanged": 0,
+                "totalOutMsgExchanged": 0,
+                "totalMsgExchanged": 47,
+                "uniqueConversation": 10,
+                "openConversation": 2,
+                "converDuration": 403452756264,
+                "startLag": 17.892083333333332,
+                "peakLoad": null,
+                "graphApiDetails": {
+                    "16-02-2021": 12,
+                    "15-02-2021": 2,
+                    "23-02-2021": 3,
+                    "22-02-2021": 1,
+                    "17-02-2021": 4,
+                    "20-02-2021": 2,
+                    "19-02-2021": 1,
+                    "27-02-2021": 22
+                },
+                "leadMessanger": {
+                    "contactType": "MESSAGE_WEBSITE",
+                    "noOfMessage": 33,
+                    "totalContactMessage": 33,
+                    "percentage": 100.0
+                }
+            },
+            summaries : [],
+            chart : {
+                updated : new Date().getTime(),
+                summary : newChartData("summary0"),
+                summaries : newChartData("summaries0")
+            } 
         }),
+        computed :  {
+            // summaryChart : function (argument) {
+            //     return this.summaryChart_;
+            // }, summariesChart : function (argument) {
+            //     return this.summariesChart_;
+            // } 
+        },
         mounted : function (argument) {
           this.dateRangeOnUpdate();
         },
@@ -316,13 +366,23 @@
               "dateRange1": this.input.daterange.startDate,
               "dateReange2": this.input.daterange.endDate
             });
-            this.summary = resp[5];
+            this.summary = (resp.data || {});
+            this.summaries = (resp.results || []);
+
+            this.chart.updated = new Date().getTime();
+            this.chart.summary.update(toMap([resp.data || {}]));
+            this.chart.summaries.update(toMap(resp.results || []));
+            
+            console.log("this.summariesChart",this.chart)
+            this.$forceUpdate();
           },
           dateRangeOnUpdate : function (r) {
-               console.log("dateRangeOnUpdate",r);
-               this.input.daterange.startDate = this.input.daterange.startDate.getTime();
+            console.log("dateRangeOnUpdate",r);
+            if(this.input.daterange.startDate)
+                this.input.daterange.startDate = this.input.daterange.startDate.getTime();
+            if(this.input.daterange.endDate)
                this.input.daterange.endDate = this.input.daterange.endDate.getTime();
-               this.loadAnalytics();
+            this.loadAnalytics();
           }
         },
 
