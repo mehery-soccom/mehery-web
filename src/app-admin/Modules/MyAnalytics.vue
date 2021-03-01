@@ -318,27 +318,20 @@
                 "agentName": "TEAM",
                 "totalInMsgExchanged": 0,
                 "totalOutMsgExchanged": 0,
-                "totalMsgExchanged": 47,
-                "uniqueConversation": 10,
-                "openConversation": 2,
-                "converDuration": 403452756264,
-                "startLag": 17.892083333333332,
+                "totalMsgExchanged": 0,
+                "uniqueConversation": 0,
+                "openConversation": 0,
+                "converDuration": 0,
+                "startLag": 0,
                 "peakLoad": null,
                 "graphApiDetails": {
-                    "16-02-2021": 12,
-                    "15-02-2021": 2,
-                    "23-02-2021": 3,
-                    "22-02-2021": 1,
-                    "17-02-2021": 4,
-                    "20-02-2021": 2,
-                    "19-02-2021": 1,
-                    "27-02-2021": 22
+
                 },
                 "leadMessanger": {
                     "contactType": "MESSAGE_WEBSITE",
-                    "noOfMessage": 33,
-                    "totalContactMessage": 33,
-                    "percentage": 100.0
+                    "noOfMessage": 0,
+                    "totalContactMessage": 0,
+                    "percentage": 0
                 }
             },
             summaries : [],
