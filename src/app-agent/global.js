@@ -12,7 +12,7 @@ export const MyFlags = {
 
 export const MyDict = {
 	social : {
-	 "FACEBOOK" : "fa-facebook", "WEBSITE" : "fa-chrome", "TELEGRAM" : "fa-telegram",  "TWITTER" : "fa-twitter"
+	 "FACEBOOK" : "fa-facebook", "WEBSITE" : "fa-chrome", "TELEGRAM" : "fa-telegram",  "TWITTER" : "fa-twitter","WHATSAPP" : "fa-whatsapp",
 	},
 	profilePic : require('./../assets/agent/images/profile.png')
 }

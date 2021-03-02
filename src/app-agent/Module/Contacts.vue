@@ -31,7 +31,7 @@
                                 ></span>
                         </div>
                         <div class="user_info contact-text">
-                            <span class="font-name" >{{chat.name}}</span>
+                            <span class="font-name" >{{chat.name || chat.contactId}}</span>
                             <p class="font-preview" >{{chat.lastmsg.text}}</p>
                         </div>
                         <div class="contact-time" :title="chat.lastmsg.timestamp">
