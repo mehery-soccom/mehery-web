@@ -36,19 +36,8 @@
                                       class="form-control" v-model="newTeam.dept_name">
                                       <span class="v-input-error">{{ v.errors[0] }}</span>
                               </ValidationProvider>
-                              </div>
-
-                            <div class="position-relative form-group">
-                              <ValidationProvider v-slot="v" rules="required|email">
-                                <label for="exampleEmail" class="">Email</label>
-                                <input name="email"
-                                        id="exampleEmail"
-                                        placeholder="abc@xyz.com"
-                                        type="email"
-                                        class="form-control" v-model="newTeam.dept_email">
-                                        <span class="v-input-error">{{ v.errors[0] }}</span>
-                              </ValidationProvider>
                             </div>
+
                             <div class="position-relative form-group">
                                 <label for="exampleEmail" class="">Code</label>
                                 <div class="input-group">

@@ -76,7 +76,7 @@ const actions = {
 
   async AddChat({ commit },chat) {
     for(var c in state.chats){
-      if(state.chats[c].sessionId == chat.sessionId){
+      if(state.chats[c].contactId == chat.contactId){
         state.chats[c].active = !!chat.active;
         state.chats[c].assigned = !!chat.assigned;
         console.log(state.chats[c],chat)
