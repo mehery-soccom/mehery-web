@@ -14,8 +14,10 @@
                      :fields="fields">
 
                 <template #cell(actions)="row">
+                  
                   <b-button size="sm" @click="activateAgent(row.item, row.index, $event.target)" variant="outline-primary">
-                    {{ row.item.isactive == "Y" ? 'DeActivate' : 'Activate' }} Agent
+                    <font-awesome-icon v-if="row.item.isactive == 'Y'" icon="user-check" title="De-Activate"/>
+                    <font-awesome-icon v-if="row.item.isactive != 'Y'" icon="user-slash" title="Activate"/>
                   </b-button>
                 </template>
 
@@ -28,9 +30,18 @@
 
   import PageTitle from "../Layout/PageTitleAction.vue";
 
+    import {library} from '@fortawesome/fontawesome-svg-core'
+    import {
+        faUserSlash,faUserCheck
+    } from '@fortawesome/free-solid-svg-icons';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+    library.add(
+        faUserSlash,faUserCheck
+    );
   export default {
     components: {
-      PageTitle,
+      PageTitle,'font-awesome-icon': FontAwesomeIcon,
     },
     data: () => ({
       heading: 'Agents',
@@ -41,8 +52,8 @@
         link : "/app/admins/agents/add"
       }],
       fields: [ { key : 'dept.dept_name', label : "Dept" },{ key : 'agent_name', label : "Name" },
-       { key : 'agent_code', label : "Code" }, { key : 'agent_email', label : "Email" },
-       { key : 'agent_channels', label : "Channels" },
+       { key : 'agent_code', label : "Username" }, { key : 'agent_email', label : "Email" },
+       { key : 'agent_channels', label : "Channels", class : "upper-case" },
        { key : 'actions', label : "Action" }]
     }),
     computed : {
@@ -63,3 +74,9 @@
     }
   }
 </script>
+<style type="text/css">
+    .upper-case {
+    text-transform: uppercase;
+  }
+
+</style>

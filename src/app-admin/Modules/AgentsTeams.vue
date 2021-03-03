@@ -16,7 +16,8 @@
 
                 <template #cell(actions)="row">
                   <b-button size="sm" @click="enableTeam(row.item, row.index, $event.target)" variant="outline-primary">
-                    {{ row.item.isactive == "Y" ? 'Disable' : 'Enable' }} Team
+                    <font-awesome-icon v-if="row.item.isactive == 'Y'" icon="users" title="De-Activate"/>
+                    <font-awesome-icon v-if="row.item.isactive != 'Y'" icon="users-slash" title="Activate"/>
                   </b-button>
                 </template>
 
@@ -68,6 +69,16 @@
 
     import PageTitle from "../Layout/PageTitleAction.vue";
 
+    import {library} from '@fortawesome/fontawesome-svg-core'
+    import {
+        faUsersSlash,faUsers
+    } from '@fortawesome/free-solid-svg-icons';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+    library.add(
+        faUsersSlash,faUsers
+    );
+
     function newTeam() {
       return {
               "dept_code": "",
@@ -78,7 +89,7 @@
     }
     export default {
         components: {
-            PageTitle,
+            PageTitle, 'font-awesome-icon': FontAwesomeIcon,
         },
         data: () => ({
             heading: 'Teams',
