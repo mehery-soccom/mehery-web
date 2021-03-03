@@ -8,8 +8,8 @@
                         <b-dropdown toggle-class="p-0 mr-2" menu-class="dropdown-menu-lg" variant="link" right>
 
                         <div class="widget-content-left  ml-3 header-user-info">
-                            <div class="widget-heading">Alina Mclourd</div>
-                            <div class="widget-subheading">VP People Manager</div>
+                            <div class="widget-heading">Admin1</div>
+                            <div class="widget-subheading">System Admin</div>
                         </div>
 
                             <span slot="button-content">
