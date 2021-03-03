@@ -165,4 +165,7 @@
     .contact_type{
         height: 23px;
     }
+    .card.card_contact_profile .card-body {
+        background-color: #f2f3f8!important;
+    }
 </style>
