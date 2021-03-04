@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div class="app-sidebar sidebar-shadow" @mouseover="toggleSidebarHover('add','closed-sidebar-open')" @mouseleave="toggleSidebarHover('remove','closed-sidebar-open')">
         <div class="app-header__logo">
             <div class="logo-src"/>
@@ -331,15 +331,21 @@
     .logo-src{
         height: 45px;
         width: 165px;
+        background-size: 140px auto;
+        background-repeat: no-repeat;
     }
     .closed-sidebar .app-sidebar .logo-src {
         width: 40px;
-        background-position: 44px 5px;
-        height: 49px;
+        height: 35px;
+        background : url("./../../assets/images/logo-short.png") ;
+        background-size: 40px auto;
+        background-repeat: no-repeat;
     }
     .closed-sidebar-open.closed-sidebar .app-sidebar .logo-src { 
-       width: 40px;
-        background-position: 44px 5px;
-        height: 49px;
+        width: 165px;
+        height: 45px;
+        background : url("./../../assets/images/logo-long.png") ;
+        background-size: 140px auto;
+        background-repeat: no-repeat;
     }
 </style>

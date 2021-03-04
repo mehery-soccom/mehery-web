@@ -1,9 +1,12 @@
 <template>
     <div>
-        <div class="h-100 bg-plum-plate bg-animation">
+        <div class="h-100 bg-animation bg-full" >
             <div class="d-flex h-100 justify-content-center align-items-center">
                 <b-col md="8" class="mx-auto app-login-box">
-                    <div class="app-logo-inverse mx-auto mb-3"/>
+                    <div class="mx-auto mb-3 log-wrapper">
+                      <img src="@/assets/images/logo.png"">
+                    </div>
+
 
                     <div class="modal-dialog w-100 mx-auto">
                         
@@ -109,5 +112,11 @@ import { mapActions } from "vuex";
 <style scoped>
     #error {
       color: red;
+    }
+    .log-wrapper {
+      text-align: center;
+    }
+    .bg-full{
+      background-color: #292d79;
     }
 </style>
