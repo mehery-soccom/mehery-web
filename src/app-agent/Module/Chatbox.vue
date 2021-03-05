@@ -59,7 +59,7 @@
 </div>
 <div v-else-if="activeChat" v-for="m in activeChat.messages">
     
-    <div v-if="!m.type" class="d-flex justify-content-start mb-4 chat-bubble">
+    <div v-if="!m.type" class="d-flex justify-content-start mb-4 chat-bubble" :title="m.tags ? m.tags.categories : null" >
         <div class="img_cont_msg">
             <img src="assets/images/profile.png" class="rounded-circle user_img_msg">
         </div>
