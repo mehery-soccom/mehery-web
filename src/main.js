@@ -9,6 +9,8 @@ import axios from 'axios';
 import BootstrapVue from "bootstrap-vue"
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VTooltip from 'v-tooltip'
+
 
 import AppAdmin from './AppAdmin'
 import AppAgent from './AppAgent'
@@ -27,6 +29,10 @@ Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(VueLoading);
+Vue.use(VTooltip);
+VTooltip.options.defaultClass = 'my-tooltip';
+VTooltip.options.defaultTemplate =
+  '<div class="foo" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 
 
 ;(function mapper(condition){ //Funtion

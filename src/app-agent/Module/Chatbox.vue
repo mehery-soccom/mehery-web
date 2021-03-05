@@ -28,7 +28,7 @@
                     </div>
                     <div  class="chat-header-right">
                         <div class="video_cam">
-                            <span  @click="MyFlags.showContactProfile = !MyFlags.showContactProfile" >
+                            <span  @click="MyFlags.showContactProfile = !MyFlags.showContactProfile" v-tooltip="'Show Chat History'" >
                                 <i class="fa fa-history"></i>
                             </span> 
                         </div>
@@ -99,9 +99,9 @@
 
                             <span class="divider-v"></span>
 
-                            <span class="msg_cotainer_smart">
-                                <i class="fas fa-power-off" @click="closSession"></i>
-                            </span>
+                            <button class="msg_cotainer_smart" click="closSession" v-tooltip="'Close Session'" title="SS">
+                                <i class="fas fa-power-off" ></i>
+                            </button>
                         </div>
                     </div>
                 </div>

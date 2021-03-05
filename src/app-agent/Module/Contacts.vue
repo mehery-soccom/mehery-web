@@ -55,6 +55,7 @@
             <span
                  v-bind:class="{'toggle-active' : isOnline}" 
                  @click="toggleOnline"
+                 v-tooltip="isOnline ? 'Go Offline' : 'Go Online'"
                 class="online-toggle fa fa-toggle-on"></span>
         </div>
     </div>

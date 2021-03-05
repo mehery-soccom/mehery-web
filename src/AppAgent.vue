@@ -21,6 +21,7 @@
   import formatters from './services/formatters';  
 
 
+
   const default_layout = "default";
 
   Vue.component('default-layout', () => import('./app-agent/Layout/DefaultLayout.vue'));
