@@ -99,7 +99,7 @@
 
                             <span v-if="quickReplies && quickReplies.length>0" class="divider-v" ></span>
 
-                            <span class="msg_cotainer_smart" click="closSession" v-tooltip="'Close Session'" title="SS">
+                            <span class="msg_cotainer_smart" @click="closSession" v-tooltip="'End Chat'">
                                 <i class="fas fa-power-off" ></i>
                             </span>
                         </div>
