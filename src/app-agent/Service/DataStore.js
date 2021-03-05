@@ -13,6 +13,11 @@ function guid() {
       + s4() + s4();
 }
 
+function eq(a,b) {
+  if(!a || !b) return false;
+  return a === b;
+}
+
 const state = {
   user: null,
   posts: null,
@@ -91,10 +96,11 @@ const actions = {
   },
 
   async SendChat({ commit,dispatch }, msg) {
-    msg.messageIdExt = msg.messageIdExt || guid();
+    msg.messageIdRef = msg.messageIdRef || guid();
     msg.version=msg.version || 0;
     dispatch("ReadChat",msg);
     let response = await axios.post("/api/sessions/message/send",{
+                        id : msg.id,
                         message : msg.text,
                         template : msg.template,
                         sessionId : msg.sessionId,
@@ -108,13 +114,16 @@ const actions = {
   },
 
   async ReadChat({ commit },m) {
-    m.messageIdExt = m.messageIdExt || guid();
+    m.messageIdRef = m.messageIdRef || guid();
     for(var c in state.chats){
-      if( (m.sessionId == state.chats[c].sessionId ) || (m.contactId == state.chats[c].contactId) ){
+      var chat = state.chats[c];
+      console.log("ReadChat-S",m.sessionId,chat.sessionId,m.contactId,chat.contactId)
+      if( (m.sessionId == chat.sessionId ) || (m.contactId == chat.contactId) ){
         var index  = -1
-        for(var j in state.chats[c].messages){
-          var msg = state.chats[c].messages[j];
-          if((msg.messageId === m.messageId) || (msg === m) || (msg.messageIdExt === m.messageIdExt)){
+        for(var j in chat.messages){
+          var msg = chat.messages[j];
+          console.log("ReadChat-M",msg.messageId,m.messageId,msg.messageIdExt,m.messageIdExt);
+          if(eq(msg.messageId,m.messageId) || eq(msg, m) || eq(msg.messageIdExt,m.messageIdExt) || eq(msg.messageIdRef, m.messageIdRef)){
             index = j;
             if(m.version < msg.version){
               m=msg;
@@ -124,9 +133,11 @@ const actions = {
         }
         m.name = m.name || state.chats[c].name;
         if(index < 0) {
-          state.chats[c].messages.push(m);
+          console.log("FOUND-NO")
+          chat.messages.push(m);
         } else {
-          state.chats[c].messages.splice(index, 1, m);
+          console.log("FOUND-Yes")
+          chat.messages.splice(index, 1, m);
         }
         //state.chats[c].newmsg = true;
         break;
