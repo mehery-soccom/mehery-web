@@ -140,7 +140,9 @@
         },
         methods: {
             async getSessions (){
-                if(!this.activeChat){
+                if(!this.activeChat ||  !this.activeChat.contactId){
+                    this.sessions.items = [];
+                    this.sessions.rows = 0;
                     return;
                 }
                 this.isLoading = true;
@@ -166,6 +168,6 @@
         height: 23px;
     }
     .card.card_contact_profile .card-body {
-        background-color: #f2f3f8!important;
+        background-color: #f5f5f5!important;
     }
 </style>

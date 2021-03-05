@@ -327,8 +327,8 @@
     }
 </script>
 
-<style>
-    .logo-src{
+<style scoped>
+    .logo-src {
         height: 45px;
         width: 165px;
         background-size: 140px auto;

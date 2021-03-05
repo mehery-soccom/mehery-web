@@ -15,27 +15,35 @@
                             <p v-if="activeChat.ilastmsg" class="user_text">{{activeChat.ilastmsg.timestamp | formatDate}} </p>
                         </div>
                         <div class="video_cam">
-                            <span><i class="fas fa-video" hidden></i></span>
-                            <span><i class="fas fa-phone" hidden></i></span>
+                            <span hidden><i class="fas fa-video" ></i></span>
+                            <span hidden><i class="fas fa-phone" ></i></span>
+                            <span  hidden  @click="MyFlags.showContactProfile = !MyFlags.showContactProfile" >
+                                <i class="fas fa-history"></i>
+                            </span> 
                         </div>
                         <div class="chat_actions" hidden>
                             <button  @click="closSession" title="Close Chat"
                             class="btn"><i class="fa fa-check-circle"></i></button>                            
                         </div>
                     </div>
+                    <div  class="chat-header-right">
+                        <div class="video_cam">
+                            <span  @click="MyFlags.showContactProfile = !MyFlags.showContactProfile" >
+                                <i class="fa fa-history"></i>
+                            </span> 
+                        </div>
+                    </div>
                     <div  class="chat-header-right"  @mouseover="showChatOptions = true"
                             @mouseleave="showChatOptions = false">
-                        <span id="action_menu_btn"
-                        ><i class="fas fa-user-clock"></i></span>
+                        <span id="action_menu_btn"> <i class="fas fa-user-clock" hidden></i></span>
                         <div class="action_menu" v-show="showChatOptions">
                             <ul style="padding-top: 10px">
                                 <li @click="MyFlags.showContactProfile = !MyFlags.showContactProfile">
-                                    <i class="fas fa-user-circle"></i> Chat Hisotry</li>
+                                    <i class="fas fa-history"></i> Chat Hisotry</li>
                                 <li @click="closSession"><i class="fa fa-check-circle"></i> Resolve Ticket</li>
                             </ul>
                         </div>  
                     </div>
-
                 </div>
                 <div class="card-body msg_card_body" v-show="!showMediaOptions">
 
@@ -47,7 +55,7 @@
         :is-full-page="false"></loading>
 
 <div v-if="!activeChat" class="msg_card_body-logo">
-    
+    <span class=""></span>
 </div>
 <div v-else-if="activeChat" v-for="m in activeChat.messages">
     
@@ -86,8 +94,14 @@
                         <hr/>
                         <div class="msg_card_body-panel-tags">
                             <span v-if="quickReplies" v-for="quickReply in quickReplies" 
-                                @click="sendQuickReply"
-                                class="msg_cotainer_smart">  {{quickReply.id.subject}}</span>
+                            @click="sendQuickReply"
+                            class="msg_cotainer_smart">  {{quickReply.id.subject}}</span>
+
+                            <span class="divider-v"></span>
+
+                            <span class="msg_cotainer_smart">
+                                <i class="fas fa-power-off" @click="closSession"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -378,5 +392,56 @@
       .action_menu ul li:hover{
         cursor: pointer;
         background-color: rgba(0,0,0,0.2);
-  }
+    }
+    .msg_card_body-logo{
+        min-height: calc(100% - 25px);
+        height: 100%;
+        position: relative;
+        padding-top: calc(50vh - 120px);
+        filter: grayscale(100%);
+        opacity : 0.2;
+        text-align: center;
+    }
+    .msg_card_body-logo>span{
+        background-image: url(./../../assets/images/logo-long.png);
+        background-size: 200px auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+        height: 60px;
+        width: 188px;
+    }
+
+    .msg_card_body-panel .msg_card_body-panel-tags {
+        text-align: center;
+        width: 90%;
+        margin: 0 auto;
+        display: table;
+        text-align:center;
+        min-height : 25px;
+    }
+    .divider-v {
+        padding-left: 2px;
+     padding-right: 4px;
+    }
+    .divider-v:after{
+        content: " ";
+        border-right: solid 1px #00000066;
+    }
+    .msg_cotainer_smart{
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 3px;
+        margin-top: 2px;
+        border-radius: 8px;
+        background-color: #FFF;
+        color: #7b7575;
+        padding: 6px;
+        position: relative;
+        font-size: 14px;
+        border: 1px solid #4b56c0d1;
+        cursor : pointer;
+        display: inline;
+    }
+
 </style>

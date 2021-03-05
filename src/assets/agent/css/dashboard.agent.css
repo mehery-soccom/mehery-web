@@ -369,41 +369,6 @@
     float: left;
 }
 
-#mySidebar {
-  color: #437db1!important;
-  background-color: transparent!important
-}
-#mySidebar .mySidebar-container {
-  background-color: rgb(242 243 248) !important;
-  height : 100%;
-}
-#mySidebar .menu_btn_close {
-  background-color: rgba(0, 0, 0, 0.03) !important;
-  color: #437db1;
-}
-#mySidebar a{
-  background-color: rgb(0 0 0 / 9%) !important;
-}
-#mySidebar a:hover{
-  color : #FFF!important;
-  background-color: rgb(0 0 0 / 50%) !important;
-}
-
-#mySidebar .sidebar-logo{
-    /* min-height: calc(100% - 25px); */
-    height: 91px;
-    position: absolute;
-    bottom: 0px;
-    background-image: url(./../images/bigbrandlogo.png);
-    background-repeat: no-repeat;
-    /* background-attachment: fixed; */
-    background-position: center;
-    /* filter: grayscale(100%); */
-    /* opacity: 0.2; */
-    width: 195px;
-    background-color: #fff0;
-    padding: 0px;
-}
 
 .card.card_contact_profile {
   color : #FFF!important;
@@ -471,18 +436,6 @@ ul.contacts li.data_unassigned {
 .msg_card_body-panel {
   width:100%
 }
-.msg_card_body-logo{
-  min-height: calc(100% - 25px);
-    height: 100%;
-    position: relative;
-    padding-top: calc(100vh - 250px);
-    background-image: url(./../images/bigbrandlogo.png);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    filter: grayscale(100%);
-    opacity : 0.2;
-}
 .msg_card_body-bubbles {
   min-height: calc(100% - 65px);
   min-height: -webkit-calc(100% - 65px);
@@ -491,29 +444,6 @@ ul.contacts li.data_unassigned {
 .msg_card_body-panel hr{
   border-top: 1px solid #e0dddd;
   margin: 10px 0;
-}
-.msg_card_body-panel .msg_card_body-panel-tags {
-    text-align: center;
-    width: 90%;
-    margin: 0 auto;
-    display: table;
-    text-align:center;
-    min-height : 25px;
-}
-.msg_cotainer_smart{
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 3px;
-    margin-top: 2px;
-    border-radius: 8px;
-    background-color: #FFF;
-    color: #7b7575;
-    padding: 6px;
-    position: relative;
-    font-size: 14px;
-    border: 1px solid #4b56c0d1;
-    cursor : pointer;
-    display: inline;
 }
 .media_card_body{
   overflow-y: auto;

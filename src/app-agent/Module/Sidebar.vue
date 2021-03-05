@@ -1,5 +1,5 @@
 <template>
-        <div class="w3-sidebar w3-bar-block w3-white w3-card w3-animate-left"
+        <div class="w3-sidebar w3-bar-block w3-white w3-card w3-animate-left mySidebar"
             v-show="MyFlags.showSidebar" id="mySidebar">
             <div class="mySidebar-container">
                 <button @click="MyFlags.showSidebar = !MyFlags.showSidebar"
@@ -13,7 +13,7 @@
                     class="fas fa-atom"></i> Indigo</span> <span
                     theme="dashboard.agent.bubble" class="w3-bar-item w3-button" hidden><i
                     class="fas fa-atom"></i> Bubble</span>
-                <div class="sidebar-logo"></div>
+                <div class="logo-src"></div>
             </div>
         </div>
 </template>
@@ -109,19 +109,40 @@
     }
 </script>
 
-<style>
+<style type="text/css" scoped>
     .logo-src{
         height: 45px;
         width: 165px;
+
+        position: absolute;
+        bottom: 5px;
+
+        background-size: 140px auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #fff0;
+        padding: 0px;
+
     }
-    .closed-sidebar .app-sidebar .logo-src {
-        width: 40px;
-        background-position: 44px 5px;
-        height: 49px;
+
+    .mySidebar {
+      color: #292d79!important;
+      background-color: transparent!important
     }
-    .closed-sidebar-open.closed-sidebar .app-sidebar .logo-src { 
-       width: 40px;
-        background-position: 44px 5px;
-        height: 49px;
+    .mySidebar .mySidebar-container {
+      background-color: #f5f5f5 !important;
+      height : 100%;
     }
+    .mySidebar .menu_btn_close {
+      background-color: rgba(0, 0, 0, 0.03) !important;
+      color: #292d79;
+    }
+    .mySidebar a{
+      background-color: rgb(0 0 0 / 9%) !important;
+    }
+    .mySidebar a:hover{
+      color : #FFF!important;
+      background-color: rgb(0 0 0 / 50%) !important;
+    }
+
 </style>

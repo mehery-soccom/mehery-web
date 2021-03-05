@@ -164,13 +164,10 @@
 </script>
 <style type="text/css" scoped="">
     .contacts_body{
-        background-color: #f2f3f8;
+        background-color: #f5f5f5;
     }
     .contacts li.router-link-exact-active{
         background-color: rgb(0 0 0 / 6%)
-    }
-    .card.card_contact_profile .card-body {
-        background-color: #f2f3f8!important;
     }
     ul.contacts .user_info *, ul.contacts .contact-time p{
        color : rgba(21, 21, 21, 0.68) !important
