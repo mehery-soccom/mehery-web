@@ -117,12 +117,10 @@ const actions = {
     m.messageIdRef = m.messageIdRef || guid();
     for(var c in state.chats){
       var chat = state.chats[c];
-      console.log("ReadChat-S",m.sessionId,chat.sessionId,m.contactId,chat.contactId)
       if( (m.sessionId == chat.sessionId ) || (m.contactId == chat.contactId) ){
         var index  = -1
         for(var j in chat.messages){
           var msg = chat.messages[j];
-          console.log("ReadChat-M",msg.messageId,m.messageId,msg.messageIdExt,m.messageIdExt);
           if(eq(msg.messageId,m.messageId) || eq(msg, m) || eq(msg.messageIdExt,m.messageIdExt) || eq(msg.messageIdRef, m.messageIdRef)){
             index = j;
             if(m.version < msg.version){
@@ -133,10 +131,8 @@ const actions = {
         }
         m.name = m.name || state.chats[c].name;
         if(index < 0) {
-          console.log("FOUND-NO")
           chat.messages.push(m);
         } else {
-          console.log("FOUND-Yes")
           chat.messages.splice(index, 1, m);
         }
         //state.chats[c].newmsg = true;
