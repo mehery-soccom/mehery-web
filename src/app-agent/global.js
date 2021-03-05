@@ -7,7 +7,7 @@ export const MyConst = {
 }
 export const MyFlags = {
   showSidebar: false,
-  showContactProfile : false,
+  showContactProfile : true,
 }
 
 export const MyDict = {
