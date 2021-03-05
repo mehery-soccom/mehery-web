@@ -21,7 +21,7 @@
             <ul class="contacts contact-list">
                 <router-link tag="li" v-for="(chat,index) in activeChats"  :key="index"
                     v-bind:class="{data_assigned : chat.assigned, data_unassigned : !chat.assigned }"
-                     :id="chat.contactId" :to="'/app/chat/' + chat.contactId + '/' + chat.sessionId" >
+                     :id="chat.contactId" :to="'/app/chat/' + chat.contactId + '/' + chat.sessionId + '/' + chat.contactId">
                     <div class="d-flex bd-highlight contact-preview">
                         <div class="img_cont">
                             <img :src="chat.profilePic || MyDict.profilePic" class="rounded-circle user_img" alt="profilpicture">

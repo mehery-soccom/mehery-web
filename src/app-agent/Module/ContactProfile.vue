@@ -50,7 +50,7 @@
                     <font-awesome-icon v-if="row.item.active" icon="circle" :style="{ color: 'green' }" />
                 </template>   
                 <template #cell(actions)="row">
-                    <router-link tag="button" :id="row.item.sessionId" :to="'/app/chat/'+row.item.contactId+ '/' + row.item.sessionId" active-class="disabled"
+                    <router-link tag="button" :id="row.item.sessionId" :to="'/app/chat/'+row.item.contactId+ '/' + row.item.sessionId + '/' + profileId" active-class="disabled"
                     class="btn btn-outline-primary btn-xs">
                             View Chat
                  </router-link>
@@ -101,6 +101,9 @@
                 }
                 return {};
             },
+            profileId : function () {
+               return this.$route.params.profileId;
+            }
         }, 
         data: () => ({
             MyDict,MyFlags,MyConst,
@@ -134,21 +137,21 @@
             this.getSessions();
         },
         watch: {
-            '$route.params.contactId': function (contactId) {
+            '$route.params.profileId': function (profileId) {
                 this.getSessions();
             }
         },
         methods: {
             async getSessions (){
-                if(!this.activeChat ||  !this.activeChat.contactId){
+                if(!this.activeChat ||  !this.activeChat.contactId || !this.$route.params.profileId){
                     this.sessions.items = [];
                     this.sessions.rows = 0;
                     return;
                 }
                 this.isLoading = true;
                 var resp = await this.$store.dispatch('GetSessions',{
-                    contactId : this.activeChat.contactId,
-                    contactType : this.activeChat.contactType
+                    contactId : this.$route.params.profileId
+                    //contactType : this.activeChat.contactType
                 });
                 this.sessions.items = (resp || []).sort(function(a,b){
                     return  (b.startSessionStamp||b.fistResponseStamp||b.lastInComingStamp||b.assignedDeptStamp||b.assignedAgentStamp||b.lastResponseStamp||b.closeSessionStamp) - (a.startSessionStamp||a.fistResponseStamp||a.lastInComingStamp||a.assignedDeptStamp||a.assignedAgentStamp||a.lastResponseStamp||a.closeSessionStamp);

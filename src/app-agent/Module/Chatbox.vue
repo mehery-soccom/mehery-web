@@ -97,11 +97,11 @@
                             @click="sendQuickReply"
                             class="msg_cotainer_smart">  {{quickReply.id.subject}}</span>
 
-                            <span class="divider-v"></span>
+                            <span v-if="quickReplies && quickReplies.length>0" class="divider-v" ></span>
 
-                            <button class="msg_cotainer_smart" click="closSession" v-tooltip="'Close Session'" title="SS">
+                            <span class="msg_cotainer_smart" click="closSession" v-tooltip="'Close Session'" title="SS">
                                 <i class="fas fa-power-off" ></i>
-                            </button>
+                            </span>
                         </div>
                     </div>
                 </div>
