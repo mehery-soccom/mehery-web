@@ -105,7 +105,7 @@ const actions = {
                         template : msg.template,
                         sessionId : msg.sessionId,
                         template : msg.template,
-                        messageIdExt : msg.messageIdExt
+                        messageIdRef : msg.messageIdRef
                     });
     msg.messageId = response.data.results[0].messageId;
     msg.version = 1;

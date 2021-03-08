@@ -283,28 +283,30 @@
                 this.sendText("/exit_chat");
                 this.$router.push("/app/chat")
             },
-            scrollToBottom : function (argument) {
+            scrollToBottom : function (force) {
                 var activeChat = this.activeChat;
                 if(!activeChat){
                     return;
                 }
+                console.log("scrollToBottom...",force)
                 var msgs = activeChat.messages;
                 if(!msgs || !msgs.length){
                     return;
                 }
                 var lastMessageId = msgs[msgs.length-1].messageId;
-                if(this.lastMessageId == lastMessageId){
+                if(this.lastMessageId == lastMessageId && !force){
                     return;
                 }
                 this.lastMessageId = lastMessageId;
 
-                //this.$nextTick(() => {
+                this.$nextTick(() => {
                     var mcb =document.querySelector('.msg_card_body');
                     if(mcb){
                         console.log("updating",mcb.scrollTop, mcb.scrollHeight);
                         mcb.scrollTop =  mcb.scrollHeight;
                     }
-                //});
+                });
+                 console.log("scrolledToBottom",force)
             },
             async loadMediaOptions(){
                 await this.$store.dispatch('LoadMediaOptions')
@@ -345,6 +347,7 @@
                     activeChat.messages = resp;
                      this.isLoading = false;
                 }
+                this.scrollToBottom(true);
             },
         },
 
