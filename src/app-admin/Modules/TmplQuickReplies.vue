@@ -27,16 +27,27 @@
                               </ValidationProvider>
                             </div>
 
-                            <div class="position-relative form-group">
+                            <div class="row">
+                           <div class="position-relative form-group col-md-6">
                                <ValidationProvider v-slot="v" >
                                     <label for="examplePassword" class="">Template</label>
-                                    <textarea name="template" id="examplePassword"
-                                     placeholder="Hello ${contact.name}" type="text"
+                                    <textarea name="template" id="examplePassword" rows="10"
+                                     :placeholder="'Hello {{contact.name}}'" type="text"
                                       class="form-control" v-model="newQReps.template">
                                     </textarea>
                                       <span class="v-input-error">{{ v.errors[0] }}</span>
                               </ValidationProvider>
                             </div>
+                            <div class="position-relative form-group col-md-6">
+                                <label for="examplePassword" class="">Template Preview</label>
+                                <textarea name="template" id="examplePassword" rows="10" readonly="readonly" 
+                                  type="text"
+                                  class="form-control" v-model="templatePreview">
+                                </textarea>
+                            </div>
+                             </div> 
+ 
+
 
                             <div class="position-relative form-group">
                               <button @click="creatQuickReps"
@@ -85,6 +96,7 @@
         faUsersSlash,faUsers,faTrash
     } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+    import mustache from 'mustache';
 
     library.add(
         faUsersSlash,faUsers,faTrash
@@ -107,12 +119,26 @@
             actions : [],
             fields: [ { key : 'category', label : "Category" }, { key : 'title', label : "Title" }, 
               { key: 'actions', label: 'Actions' }],
-            newQReps : newQReps()
+            newQReps : newQReps(),
+            sample : {
+              contact : {
+                name : "John Doe", phone : "919876543210", email : "John.Doe@company.com"
+              }
+            }
         }),
         computed : {
             teams : function (argument) {
               return this.$store.getters.StateQReps
-            } 
+            },
+            templatePreview : function (argument) {
+              if(!this.newQReps.template)
+                  return this.newQReps.template;
+              try {
+                  return mustache.render(this.newQReps.template, this.sample);
+              } catch (e){
+                  return this.newQReps.template
+              }
+            }  
         },
         created : function (argument) {
           this.loadQReps();

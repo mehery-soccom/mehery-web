@@ -94,8 +94,8 @@
                         <hr/>
                         <div class="msg_card_body-panel-tags">
                             <span v-if="quickReplies" v-for="quickReply in quickReplies" 
-                            @click="sendQuickReply"
-                            class="msg_cotainer_smart">  {{quickReply.id.subject}}</span>
+                            @click="sendQuickReply(quickReply._message)"
+                            class="msg_cotainer_smart">  {{quickReply.title}}</span>
 
                             <span v-if="quickReplies && quickReplies.length>0" class="divider-v" ></span>
 
@@ -171,6 +171,7 @@
     import { MyFlags,MyDict,MyConst } from './../global';
     import Loading from 'vue-loading-overlay';
     import tunnel from './../../services/tunnel';
+    import mustache from 'mustache';
 
     export default {
         components: {
@@ -277,7 +278,7 @@
                 this.value = `${this.message_text}\n`;
             },
             sendQuickReply : function (argument) {
-                this.sendText(event.target.innerText,this.showMediaOptions ?   this.selectedMedia : null);
+                this.sendText(argument || event.target.innerText,this.showMediaOptions ?   this.selectedMedia : null);
             },
             closSession :  function () {
                 this.sendText("/exit_chat");
@@ -325,7 +326,16 @@
                 }
                 this.ilastMessageId = ilastmsg.messageId;
                 var quickReplies = await this.$store.dispatch('LoadQuickReplies',ilastmsg.tags);
-                this.quickReplies = quickReplies;
+                this.quickReplies = quickReplies.map(function (quickReply) {
+                    if(quickReply.template){
+                        quickReply._message = mustache.render(quickReply.template, { 
+                            contact : activeChat.contact
+                        });
+                    } else {
+                        quickReply._message = quickReply.message || quickReply.title;
+                    }
+                    return quickReply
+                });
             },
             async loadMessages(){
                 console.log("loadMessages...")

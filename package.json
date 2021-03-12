@@ -20,6 +20,7 @@
     "fsevents": "^2.3.2",
     "increase-memory-limit": "^1.0.6",
     "moment": "^2.29.1",
+    "mustache": "^4.1.0",
     "node-sass": "^4.14.0",
     "numeral": "^2.0.6",
     "pe7-icon": "^1.0.4",
