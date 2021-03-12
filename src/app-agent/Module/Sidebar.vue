@@ -4,6 +4,8 @@
             <div class="mySidebar-container">
                 <button @click="MyFlags.showSidebar = !MyFlags.showSidebar"
                     class="w3-bar-item w3-large menu_btn_close fa fa-arrow-left">&nbsp;</button>
+                <span class="w3-bar-item w3-button">
+                <i class="fas fa-user">&nbsp;&nbsp;</i>{{MyConst.agent}}</span>    
                 <a :href="MyConst.appPrefix + '/auth/logout'" class="w3-bar-item w3-button"><i
                     class="fas fa-sign-out-alt"></i> Logout</a>
                 <hr />
