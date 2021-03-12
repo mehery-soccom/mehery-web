@@ -8,7 +8,7 @@
                         <b-dropdown toggle-class="p-0 mr-2" menu-class="dropdown-menu-lg" variant="link" right>
 
                         <div class="widget-content-left  ml-3 header-user-info">
-                            <div class="widget-heading">Admin1</div>
+                            <div class="widget-heading" v-if="!!MyConst.user" >{{MyConst.user}}</div>
                             <div class="widget-subheading">System Admin</div>
                         </div>
 
@@ -18,11 +18,12 @@
                                 </div>
                             </span>
                             <div tabindex="-1" class="dropdown-divider"></div>
-                            <span v-if="isLoggedIn">
-                                <button   @click="logout" type="button" tabindex="0" class="dropdown-item">Logout</button>
+                            <span v-if="!!MyConst.user">
+                                <a  :href="MyConst.appPrefix + '/auth/logout'"
+                                    type="button" tabindex="0" class="dropdown-item">Logout</a>
                             </span>
                             <span v-else>
-                                <router-link to="auth/login" class="dropdown-item" >Login</router-link>
+                                <a :href="MyConst.appPrefix + '/auth/logout'" class="dropdown-item" >Login</a>
                             </span>
                         </b-dropdown>
                     </div>
@@ -62,6 +63,7 @@
         faFileArchive,
         faEllipsisH,
     );
+    import { MyFlags,MyConst } from './../../global';
 
     export default {
         components: {
@@ -69,12 +71,11 @@
             'font-awesome-icon': FontAwesomeIcon,
         },
         computed : {
-          isLoggedIn : function(){ return this.$store.getters.isAuthenticated}
+          
         },
-        data () {
-            return {
-            };
-        },
+        data : () => ({
+            MyFlags : MyFlags, MyConst : MyConst
+        }),
         methods: {
             async logout (){
                 await this.$store.dispatch('LogOut')

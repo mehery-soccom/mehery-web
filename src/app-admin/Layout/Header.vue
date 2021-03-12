@@ -62,6 +62,9 @@
 
 
         },
+        mounted : function (argument) {
+            
+        },
         methods: {
             toggleMobile(className) {
                 const el = document.body;

@@ -99,6 +99,26 @@
                         icon: 'pe-7s-network',
                     },
                     {
+                        title: 'Templates',
+                        icon: 'pe-7s-browser',
+                        enabled : true,
+                        child: [
+                            {   
+                                enabled : true,
+                                href: '/app/admins/tmpl/quickreplies',
+                                title: 'Quick Replies',
+                            },
+                            {
+                                href: '/pages/register-boxed',
+                                title: 'Register Boxed',
+                            },
+                            {
+                                href: '/pages/forgot-password-boxed',
+                                title: 'Forgot Password Boxed',
+                            },
+                        ]
+                    },
+                    {
                         title: 'Dashboards',
                         icon: 'pe-7s-rocket',
                         child: [

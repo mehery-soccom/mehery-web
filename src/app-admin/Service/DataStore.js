@@ -29,14 +29,17 @@ const state = {
   chatsCounter : 1,
   meta : null,
   mediaOptions : null,
-  quickReplies : []
+  quickReplies : [],
+  qreps : null
 };
 
 const getters = {
     //Contacts
+  isAuthenticated: (state) => !!state.user,
+  StateQReps: (state) => state.qreps,
   StateTeams: (state) => state.teams,
   StateAgents: (state) => state.agents,
-  StateMeta: (state) => state.meta,
+  StateMeta: (state) => state.meta
 };
 
 const actions = {
@@ -56,6 +59,12 @@ const actions = {
     		}
     	});
     await commit("setUser", user.get("username"));
+  },
+
+  async LogOut({ commit }) {
+   axios.get("/auth/logout");
+    let user = null;
+    commit("logout", user);
   },
 
   async CreatTeam({ commit },team) {
@@ -102,10 +111,34 @@ const actions = {
     return response.data;
   },
 
+  async CreatQuickReps({ commit },qReps) {
+    let UserForm = new FormData()
+    UserForm.append('category', qReps.category);
+    UserForm.append('title', qReps.title);
+    UserForm.append('template', qReps.template);
+    let response = await axios.post("/api/tmpl/quickreps",UserForm);
+    commit("setQReps", response.data.results);
+  },
+
+  async GetQuickReps({ commit }) {
+    let response = await axios.get("/api/tmpl/quickreps");
+    commit("setQReps", response.data.results);
+  },
+
+  async DeleteQuickReps({ commit },qReps) {
+    let response = await axios.delete("/api/tmpl/quickreps?id=" + qReps.id,{
+      data : {id : qReps.id}
+     });
+    commit("setQReps", response.data.results);
+  },
+
 };
 
 const mutations = {
   //Contacts
+  setQReps(state, qreps) {
+    state.qreps = qreps;
+  },
   setTeams(state, teams) {
     state.teams = teams;
   },
