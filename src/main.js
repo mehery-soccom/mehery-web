@@ -11,6 +11,9 @@ import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VTooltip from 'v-tooltip'
 
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
 
 import AppAdmin from './AppAdmin'
 import AppAgent from './AppAgent'
@@ -32,7 +35,8 @@ Vue.use(VueLoading);
 Vue.use(VTooltip);
 VTooltip.options.defaultClass = 'my-tooltip';
 VTooltip.options.defaultTemplate =
-  '<div class="foo" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+  '<div class="foo" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>';
+Vue.use(VueToast);
 
 
 ;(function mapper(condition){ //Funtion

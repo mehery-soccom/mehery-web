@@ -28,6 +28,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
+                  <ValidationObserver ref="form">
                     <div class="card-body"><h5 class="card-title">Add Team </h5>                    
                             <div class="position-relative form-group">
                               <ValidationProvider v-slot="v" rules="required">
@@ -53,8 +54,8 @@
                                 name="password" id="examplePassword"
                                 class="form-control btn btn-primary">Create</button>
                               </div>
-                           
                     </div>
+                  </ValidationObserver>
                 </div>
             </div>
 
@@ -116,6 +117,7 @@
           async createTeam () {
             await this.$store.dispatch('CreatTeam', this.newTeam);
             this.newTeam = newTeam();
+            this.$refs.form.reset();
           },
           async enableTeam(item) {
              item.isactive = item.isactive == "Y" ? "N" : "Y";

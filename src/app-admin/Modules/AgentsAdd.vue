@@ -4,6 +4,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="main-card mb-3 card">
+                   <ValidationObserver ref="form">
                     <div class="card-body"><h5 class="card-title">Agent Details</h5>
                         <form class="">
                     
@@ -44,6 +45,7 @@
                            
                         </form>
                     </div>
+                  </ValidationObserver>
                 </div>
             </div>
 
@@ -188,6 +190,7 @@
           async createAgent () {
             await this.$store.dispatch('CreateAgent', this.newAgent);
             this.newAgent = newAgent();
+            this.$refs.form.reset();
           },
         }
     }

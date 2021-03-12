@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
+                  <ValidationObserver ref="form">
                     <div class="card-body"><h5 class="card-title">Add Quick Reply </h5>                    
                             <div class="position-relative form-group">
                               <ValidationProvider v-slot="v" rules="required">
@@ -27,7 +28,7 @@
                             </div>
 
                             <div class="position-relative form-group">
-                               <ValidationProvider v-slot="v" rules="required">
+                               <ValidationProvider v-slot="v" >
                                     <label for="examplePassword" class="">Template</label>
                                     <textarea name="template" id="examplePassword"
                                      placeholder="Hello ${contact.name}" type="text"
@@ -44,6 +45,7 @@
                             </div>
                            
                     </div>
+                  </ValidationObserver>
                 </div>
             </div>
         </div>
@@ -120,8 +122,12 @@
             await this.$store.dispatch('GetQuickReps');
           },
           async creatQuickReps () {
-            await this.$store.dispatch('CreatQuickReps', this.newQReps);
-            this.newQReps = newQReps();
+            let success = await this.$refs.form.validate();
+            if(success === true){
+              await this.$store.dispatch('CreatQuickReps', this.newQReps);
+              this.newQReps = newQReps();
+              this.$refs.form.reset();
+            }
           },
           async deleteReps(item) {
              await this.$store.dispatch('DeleteQuickReps', item);

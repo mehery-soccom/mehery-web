@@ -2,6 +2,7 @@
 
 
 import axios from "axios";
+import Vue from 'vue';
 
 
 function guid() {
@@ -19,6 +20,12 @@ function guid() {
       console.log("===>",response.request.responseURL)
       window.location.href = response.request.responseURL;
     }
+
+    if(response.data && response.data.message){
+        //Vue.toaster.success(response.data.message);
+        Vue.$toast.success(response.data.message)
+    }
+
   }
 
 const state = {
@@ -117,6 +124,7 @@ const actions = {
     UserForm.append('title', qReps.title);
     UserForm.append('template', qReps.template);
     let response = await axios.post("/api/tmpl/quickreps",UserForm);
+    validateResponse(response);
     commit("setQReps", response.data.results);
   },
 
@@ -129,6 +137,7 @@ const actions = {
     let response = await axios.delete("/api/tmpl/quickreps?id=" + qReps.id,{
       data : {id : qReps.id}
      });
+    validateResponse(response);
     commit("setQReps", response.data.results);
   },
 
