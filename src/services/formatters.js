@@ -31,8 +31,9 @@ import numeral from 'numeral';
   Vue.filter('newlines', function (html_str) {
       return html_str.trim() ;//.replace(/(?:\r\n|\r|\n)/g, '<br/>').trim();
   });
-  Vue.filter('number', function (value) {
-      return numeral(value).format("0,0a").toUpperCase();//.replace(/(?:\r\n|\r|\n)/g, '<br/>').trim();
+  Vue.filter('number', function (value,format) {
+      var _format = format || "0,0a"
+      return numeral(value).format(_format).toUpperCase();//.replace(/(?:\r\n|\r|\n)/g, '<br/>').trim();
   });
   var HOUR = 3600;
   var DAY = HOUR*24;

@@ -7,13 +7,13 @@
             <div class="no-gutters row">
                 <div class="col-md-12 col-lg-4">
                     <ul class="list-group list-group-flush">
-                        <li class="bg-transparent list-group-item">
+                        <li class="bg-transparent list-group-item" title="Total Session">
                             <div class="widget-content p-0">
                                 <div class="widget-content-outer">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Unique Conversations</div>
-                                            <div class="widget-subheading">Total Session</div>
+                                            <div class="widget-subheading">{{summary.uniqueConversation | number('0,0')}}</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-success">{{summary.uniqueConversation | number}}</div>
@@ -22,13 +22,13 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="bg-transparent list-group-item">
+                        <li class="bg-transparent list-group-item" title="Total I/O messages">
                             <div class="widget-content p-0">
                                 <div class="widget-content-outer">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Messages Exchanged</div>
-                                            <div class="widget-subheading">Total I/O messages</div>
+                                            <div class="widget-subheading">{{summary.totalMsgExchanged | number('0,0')}}</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-primary">{{summary.totalMsgExchanged | number}}</div>
@@ -66,10 +66,16 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Peak Load</div>
-                                            <div class="widget-subheading">-</div>
+                                            <div class="widget-subheading"
+                                                v-if="summary.peakLoad && summary.peakLoad.timestamp">
+                                                {{summary.peakLoad.timestamp}}
+                                            </div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning">-</div>
+                                            <div class="widget-numbers text-warning"
+                                              v-if="summary.peakLoad && summary.peakLoad.total">
+                                                {{summary.peakLoad.total}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +91,7 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Start Lag</div>
-                                            <div class="widget-subheading">Start Lag</div>
+                                            <div class="widget-subheading">Avg. time to agent response</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-success">{{summary.startLag | timespan}}</div>
@@ -100,7 +106,7 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Conversation Duration</div>
-                                            <div class="widget-subheading">Conversation Duration</div>
+                                            <div class="widget-subheading">Avg. session duration</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-primary">{{summary.converDuration | timespan}}</div>
@@ -323,7 +329,7 @@
                 "openConversation": 0,
                 "converDuration": 0,
                 "startLag": 0,
-                "peakLoad": null,
+                "peakLoad": {},
                 "graphApiDetails": {
 
                 },
