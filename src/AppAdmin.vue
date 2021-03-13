@@ -41,6 +41,11 @@
         return 'admin-' +(this.$route.meta.layout || default_layout) + '-layout';
       }
     },
+    mounted : function (argument) {
+        let recaptchaScript = document.createElement('script')
+        recaptchaScript.setAttribute('src', 'https://kit.fontawesome.com/1153462312.js')
+        document.head.appendChild(recaptchaScript);
+    },
     created (){
       this.$store.registerModule("DataStore",DataStore);
     },

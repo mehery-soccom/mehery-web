@@ -22,6 +22,7 @@
                     &nbsp;{{ row.item.assignedToAgent}}
                 </template>
                 <template #cell(contactId)="row">
+                    <i  class="fab"  v-bind:class="MyDict.socialPrefix(row.item.contactId)"> </i>
                     {{ row.item.contactName || row.item.contactId}}
                 </template>
                 <template #cell(startSessionStamp)="row">
@@ -57,6 +58,7 @@
 
     import PageTitle from "../../Layout/Components/PageTitleDateRange.vue";
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+    import { MyFlags,MyDict,MyConst } from './../global';
 
     //import chart1 from './Analytics/chart1';
     //import chart2 from './Analytics/chart2';
@@ -93,6 +95,7 @@
            // chart1,chart2,chart3,
         },
         data: () => ({
+            MyFlags : MyFlags, MyDict : MyDict,MyConst : MyConst,
             heading: 'Chat Sessions',
             subheading: 'Select date range for report',
             icon: 'pe-7s-chat icon-gradient bg-tempting-azure',

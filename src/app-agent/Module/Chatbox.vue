@@ -94,7 +94,7 @@
                         <hr/>
                         <div class="msg_card_body-panel-tags">
                             <span v-if="quickReplies" v-for="quickReply in quickReplies" 
-                            @click="sendQuickReply(quickReply._message)"
+                            @click="sendQuickReply(quickReply._message)" v-tooltip="quickReply._message"
                             class="msg_cotainer_smart">  {{quickReply.title}}</span>
 
                             <span v-if="quickReplies && quickReplies.length>0" class="divider-v" ></span>

@@ -7,10 +7,10 @@
             <div class="no-gutters row">
                 <div class="col-md-12 col-lg-4">
                     <ul class="list-group list-group-flush">
-                        <li class="bg-transparent list-group-item" title="Total Session">
-                            <div class="widget-content p-0">
+                        <li class="bg-transparent list-group-item"  >
+                            <div class="widget-content p-0" >
                                 <div class="widget-content-outer">
-                                    <div class="widget-content-wrapper">
+                                    <div class="widget-content-wrapper" v-tooltip="'Total Session'">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Unique Conversations</div>
                                             <div class="widget-subheading">{{summary.uniqueConversation | number('0,0')}}</div>
@@ -22,10 +22,10 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="bg-transparent list-group-item" title="Total I/O messages">
+                        <li class="bg-transparent list-group-item"  >
                             <div class="widget-content p-0">
                                 <div class="widget-content-outer">
-                                    <div class="widget-content-wrapper">
+                                    <div class="widget-content-wrapper" v-tooltip="'Total I/O messages'">
                                         <div class="widget-content-left">
                                             <div class="widget-heading">Messages Exchanged</div>
                                             <div class="widget-subheading">{{summary.totalMsgExchanged | number('0,0')}}</div>
